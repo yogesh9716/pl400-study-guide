@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PL-400: Microsoft Power Platform Developer — Complete Guide</title>
+<style>
+  :root {
+    --navy: #0f1e3c; --navy-mid: #162850; --navy-light: #1e3a6e;
+    --gold: #c9a84c; --gold-light: #e8c97a; --accent: #4fc3f7;
+    --accent2: #81c784; --accent3: #ff8a65; --accent4: #ce93d8;
+    --white: #f4f6fb; --muted: #b0bec5; --sidebar-w: 280px; --code-bg: #0d1117;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Georgia','Times New Roman',serif; background: var(--navy); color: var(--white); display: flex; min-height: 100vh; }
+  #sidebar { width: var(--sidebar-w); min-height: 100vh; background: var(--navy-mid); border-right: 1px solid rgba(201,168,76,0.2); position: fixed; top: 0; left: 0; overflow-y: auto; z-index: 100; transition: transform 0.3s; }
+  #sidebar-header { padding: 24px 20px 16px; border-bottom: 1px solid rgba(201,168,76,0.3); }
+  #sidebar-header h2 { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  #sidebar-header p { font-size: 11px; color: var(--muted); font-style: italic; }
+  #toc { padding: 12px 0; }
+  .toc-chapter { padding: 10px 20px 4px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); opacity: 0.7; margin-top: 8px; }
+  .toc-link { display: block; padding: 7px 20px 7px 28px; font-size: 13px; color: var(--muted); text-decoration: none; border-left: 3px solid transparent; transition: all 0.2s; font-family: Arial,sans-serif; }
+  .toc-link:hover,.toc-link.active { color: var(--white); background: rgba(201,168,76,0.08); border-left-color: var(--gold); }
+  .toc-sub { padding-left: 40px; font-size: 12px; }
+  #progress-bar { position: fixed; top: 0; left: var(--sidebar-w); right: 0; height: 3px; background: rgba(255,255,255,0.05); z-index: 200; }
+  #progress-fill { height: 100%; background: linear-gradient(90deg,var(--gold),var(--accent)); width: 0%; transition: width 0.1s; }
+  #main { margin-left: var(--sidebar-w); flex: 1; padding: 0; }
+  #hero { background: linear-gradient(135deg,var(--navy-mid) 0%,#0a1628 100%); padding: 80px 60px; border-bottom: 1px solid rgba(201,168,76,0.2); position: relative; overflow: hidden; }
+  #hero::before { content: 'PL-400'; position: absolute; right: -20px; top: -30px; font-size: 180px; font-weight: 900; color: rgba(201,168,76,0.04); font-family: Arial Black,sans-serif; pointer-events: none; }
+  .hero-badge { display: inline-block; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); color: var(--gold); padding: 4px 14px; border-radius: 20px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px; font-family: Arial,sans-serif; }
+  #hero h1 { font-size: clamp(28px,4vw,48px); line-height: 1.2; color: var(--white); margin-bottom: 16px; }
+  #hero h1 span { color: var(--gold); }
+  #hero p { font-size: 17px; color: var(--muted); max-width: 620px; line-height: 1.7; margin-bottom: 32px; }
+  .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; }
+  .hero-stat .num { font-size: 28px; font-weight: 700; color: var(--gold); font-family: Arial,sans-serif; }
+  .hero-stat .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-family: Arial,sans-serif; }
+  .chapter { padding: 60px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .chapter:nth-child(even) { background: rgba(255,255,255,0.01); }
+  .chapter-header { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 40px; }
+  .chapter-num { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); opacity: 0.7; font-family: Arial,sans-serif; min-width: 90px; padding-top: 6px; }
+  .chapter-title-block h2 { font-size: clamp(22px,3vw,34px); color: var(--white); margin-bottom: 8px; }
+  .chapter-title-block p { font-size: 15px; color: var(--muted); font-style: italic; }
+  h3 { font-size: 20px; color: var(--gold-light); margin: 36px 0 14px; padding-bottom: 6px; border-bottom: 1px solid rgba(201,168,76,0.2); }
+  h4 { font-size: 16px; color: var(--accent); margin: 24px 0 10px; font-family: Arial,sans-serif; }
+  p { line-height: 1.8; margin-bottom: 14px; color: #d0d8e8; font-size: 15px; }
+  strong { color: var(--white); }
+  em { color: var(--accent); font-style: normal; font-weight: 600; }
+  pre { background: var(--code-bg); border: 1px solid rgba(255,255,255,0.1); border-left: 3px solid var(--gold); border-radius: 6px; padding: 20px 24px; overflow-x: auto; margin: 16px 0 24px; }
+  pre code { font-family: 'Consolas','Monaco','Courier New',monospace; font-size: 13px; line-height: 1.7; color: #e6edf3; }
+  .code-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-family: Arial,sans-serif; margin-bottom: 8px; display: block; }
+  .kw{color:#ff7b72} .st{color:#a5d6ff} .cm{color:#8b949e;font-style:italic} .fn{color:#d2a8ff} .nu{color:#79c0ff} .ty{color:#ffa657} .op{color:#ff7b72}
+  .callout { border-radius: 8px; padding: 18px 22px; margin: 20px 0; border-left: 4px solid; font-family: Arial,sans-serif; font-size: 14px; line-height: 1.7; }
+  .callout.exam { background: rgba(201,168,76,0.08); border-color: var(--gold); color: var(--gold-light); }
+  .callout.tip { background: rgba(129,199,132,0.08); border-color: var(--accent2); color: #a5d6a7; }
+  .callout.warn { background: rgba(255,138,101,0.08); border-color: var(--accent3); color: #ffab91; }
+  .callout.deep { background: rgba(206,147,216,0.08); border-color: var(--accent4); color: #e1bee7; }
+  .callout strong { display: block; margin-bottom: 6px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.8; }
+  .table-wrap { overflow-x: auto; margin: 20px 0; }
+  table { width: 100%; border-collapse: collapse; font-family: Arial,sans-serif; font-size: 13px; }
+  th { background: rgba(201,168,76,0.15); color: var(--gold-light); padding: 10px 14px; text-align: left; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid rgba(201,168,76,0.3); }
+  td { padding: 9px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #c8d6e8; vertical-align: top; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  td code { background: rgba(255,255,255,0.1); padding: 1px 6px; border-radius: 3px; font-size: 12px; font-family: monospace; }
+  .quiz-block { background: var(--navy-mid); border: 1px solid rgba(79,195,247,0.2); border-radius: 10px; padding: 28px; margin: 32px 0; }
+  .quiz-block h4 { color: var(--accent); margin: 0 0 18px; font-size: 15px; }
+  .quiz-q { font-size: 15px; color: var(--white); margin-bottom: 16px; line-height: 1.6; font-family: Arial,sans-serif; }
+  .quiz-opt { display: block; padding: 10px 16px; margin: 6px 0; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; cursor: pointer; font-family: Arial,sans-serif; font-size: 14px; color: var(--muted); transition: all 0.2s; text-align: left; width: 100%; }
+  .quiz-opt:hover { background: rgba(79,195,247,0.1); border-color: var(--accent); color: var(--white); }
+  .quiz-opt.correct { background: rgba(129,199,132,0.15); border-color: var(--accent2); color: #a5d6a7; }
+  .quiz-opt.wrong { background: rgba(255,138,101,0.1); border-color: var(--accent3); color: #ffab91; }
+  .quiz-explain { display: none; margin-top: 14px; padding: 14px; background: rgba(255,255,255,0.04); border-radius: 6px; font-size: 13px; color: var(--muted); font-family: Arial,sans-serif; line-height: 1.7; }
+  .quiz-explain.show { display: block; }
+  .compare-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 16px; margin: 20px 0; }
+  .compare-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 20px; }
+  .compare-card h5 { font-family: Arial,sans-serif; font-size: 14px; color: var(--gold); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(201,168,76,0.2); }
+  .compare-card ul { list-style: none; padding: 0; }
+  .compare-card ul li { font-family: Arial,sans-serif; font-size: 13px; color: var(--muted); padding: 4px 0 4px 16px; position: relative; }
+  .compare-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--gold); opacity: 0.5; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-family: Arial,sans-serif; font-weight: 700; letter-spacing: 0.5px; margin: 0 2px; }
+  .tag.exam { background: rgba(201,168,76,0.2); color: var(--gold); }
+  .tag.trap { background: rgba(255,138,101,0.2); color: var(--accent3); }
+  .analogy { background: rgba(79,195,247,0.05); border: 1px dashed rgba(79,195,247,0.25); border-radius: 8px; padding: 18px 22px; margin: 20px 0; font-style: italic; color: #90caf9; font-size: 14px; line-height: 1.7; }
+  .analogy::before { content: '💡 Analogy: '; font-style: normal; font-weight: 700; color: var(--accent); }
+  #menu-toggle { display: none; position: fixed; top: 12px; left: 12px; z-index: 300; background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.3); color: var(--gold); padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 18px; }
+  @media(max-width:768px){
+    #menu-toggle{display:block}
+    #sidebar{transform:translateX(-100%)}
+    #sidebar.open{transform:translateX(0)}
+    #main{margin-left:0}
+    #progress-bar{left:0}
+    .chapter{padding:40px 24px}
+    #hero{padding:60px 24px}
+  }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.05); margin: 32px 0; }
+</style>
+</head>
+<body>
+<button id="menu-toggle" onclick="toggleSidebar()">☰</button>
+<div id="progress-bar"><div id="progress-fill"></div></div>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <h2>PL-400 Complete Guide</h2>
+    <p>Microsoft Power Platform Developer</p>
+  </div>
+  <div id="toc">
+    <div class="toc-chapter">Start Here</div>
+    <a class="toc-link" href="#hero">Overview</a>
+    <a class="toc-link" href="#study-plan">Study Plan & Exam Blueprint</a>
+    <div class="toc-chapter">Part I — Architecture</div>
+    <a class="toc-link" href="#ch1">Ch 1: Technical Design</a>
+    <a class="toc-link toc-sub" href="#ch1-when">Dataverse vs SharePoint</a>
+    <a class="toc-link toc-sub" href="#ch1-security">Security Model</a>
+    <a class="toc-link toc-sub" href="#ch1-licensing">Licensing</a>
+    <div class="toc-chapter">Part II — Dataverse</div>
+    <a class="toc-link" href="#ch2">Ch 2: Dataverse Deep Dive</a>
+    <a class="toc-link toc-sub" href="#ch2-tables">Tables & Columns</a>
+    <a class="toc-link toc-sub" href="#ch2-relationships">Relationships</a>
+    <a class="toc-link toc-sub" href="#ch2-plugins">Plugins (C#)</a>
+    <a class="toc-link toc-sub" href="#ch2-webapi">Web API & FetchXML</a>
+    <div class="toc-chapter">Part III — Power Apps</div>
+    <a class="toc-link" href="#ch3">Ch 3: Power Apps Mastery</a>
+    <a class="toc-link toc-sub" href="#ch3-canvas">Canvas Apps & Delegation</a>
+    <a class="toc-link toc-sub" href="#ch3-mda">Model-Driven Apps</a>
+    <a class="toc-link toc-sub" href="#ch3-pcf">PCF Controls</a>
+    <div class="toc-chapter">Part IV — Automate</div>
+    <a class="toc-link" href="#ch4">Ch 4: Power Automate</a>
+    <a class="toc-link toc-sub" href="#ch4-flows">Flow Types</a>
+    <a class="toc-link toc-sub" href="#ch4-expressions">Expressions</a>
+    <a class="toc-link toc-sub" href="#ch4-connectors">Custom Connectors</a>
+    <a class="toc-link toc-sub" href="#ch4-rpa">RPA / Desktop Flows</a>
+    <div class="toc-chapter">Part V — Extending</div>
+    <a class="toc-link" href="#ch5">Ch 5: Extend UX (JS)</a>
+    <a class="toc-link toc-sub" href="#ch5-xrm">Xrm Object Model</a>
+    <a class="toc-link toc-sub" href="#ch5-events">Form Events</a>
+    <a class="toc-link" href="#ch6">Ch 6: Extend Platform</a>
+    <a class="toc-link toc-sub" href="#ch6-pluginreg">Plugin Registration</a>
+    <a class="toc-link toc-sub" href="#ch6-azure">Azure Integration</a>
+    <div class="toc-chapter">Part VI — Integration</div>
+    <a class="toc-link" href="#ch7">Ch 7: Integration & Data</a>
+    <a class="toc-link toc-sub" href="#ch7-graph">Microsoft Graph</a>
+    <a class="toc-link toc-sub" href="#ch7-webhooks">Webhooks vs ServiceBus</a>
+    <a class="toc-link toc-sub" href="#ch7-dataops">Data Operations</a>
+    <div class="toc-chapter">Part VII — ALM</div>
+    <a class="toc-link" href="#ch8">Ch 8: ALM & Solutions</a>
+    <a class="toc-link toc-sub" href="#ch8-solutions">Solution Architecture</a>
+    <a class="toc-link toc-sub" href="#ch8-cicd">CI/CD Pipelines</a>
+    <a class="toc-link toc-sub" href="#ch8-pac">PAC CLI Reference</a>
+    <div class="toc-chapter">Reference</div>
+    <a class="toc-link" href="#cheatsheet">Master Cheat Sheet</a>
+    <a class="toc-link" href="#practice">Practice Exam (30 Qs)</a>
+  </div>
+</nav>
+<main id="main">
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-badge">Microsoft Certification · PL-400</div>
+  <h1>Microsoft <span>Power Platform</span><br>Developer — Complete Guide</h1>
+  <p>From first principles to certified. Every concept explained, every C# plugin pattern written out, every exam trap flagged with a yellow box. This is the book that makes PL-400 understandable — not just passable.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">8</div><div class="lbl">Chapters</div></div>
+    <div class="hero-stat"><div class="num">30+</div><div class="lbl">Practice Questions</div></div>
+    <div class="hero-stat"><div class="num">50+</div><div class="lbl">Code Samples</div></div>
+    <div class="hero-stat"><div class="num">35+</div><div class="lbl">Reference Tables</div></div>
+  </div>
+</section>
+
+<!-- STUDY PLAN -->
+<section id="study-plan" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-num">Introduction</div>
+    <div class="chapter-title-block">
+      <h2>Exam Blueprint & Your Study Plan</h2>
+      <p>Understanding the exam before you open a book is half the battle</p>
+    </div>
+  </div>
+
+  <h3>What Is PL-400?</h3>
+  <p>PL-400 is Microsoft's certification for <strong>Power Platform Developers</strong> — people who extend Power Platform beyond what makers can do: writing C# plugins, building PCF controls in TypeScript, creating custom connectors, integrating with Azure and Graph API, and managing ALM pipelines. It sits at the Associate level but its technical depth makes it genuinely hard.</p>
+  <p>As a SharePoint + Power Platform developer, you already know the ecosystem. Your gaps are likely in <strong>Dataverse plugin development, PCF component architecture, and ALM / CI-CD pipelines</strong>. This book covers everything — but pay extra attention to those three areas.</p>
+
+  <div class="callout exam"><strong>📋 Exam Blueprint (Current)</strong>
+    40–60 questions · ~150 minutes · passing score ~700/1000 · Associate level<br><br>
+    <strong>Create a technical design (10–15%)</strong> — Technology selection, security architecture, licensing decisions<br>
+    <strong>Configure Dataverse (15–20%)</strong> — Tables, columns, relationships, security roles, BPFs, auditing<br>
+    <strong>Create and configure Power Apps (15–20%)</strong> — Canvas, model-driven, PCF components<br>
+    <strong>Configure Power Automate (10–15%)</strong> — Flow types, expressions, custom connectors, error handling<br>
+    <strong>Extend the user experience (10–15%)</strong> — JavaScript, Xrm object model, client-side events<br>
+    <strong>Extend the platform (15–20%)</strong> — Plugins, workflow extensions, Azure service endpoints<br>
+    <strong>Develop integrations (10–15%)</strong> — Graph API, webhooks, data operations at scale
+  </div>
+
+  <h3>12-Week Study Plan</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Week</th><th>Focus Area</th><th>Daily Target</th><th>Milestone</th></tr></thead>
+    <tbody>
+      <tr><td>1–2</td><td>Ch 1: Technical Design + Licensing + Security Model</td><td>1 hr</td><td>Justify any technology choice from a scenario</td></tr>
+      <tr><td>3–4</td><td>Ch 2: Dataverse — Tables, Columns, Relationships, Security</td><td>1 hr</td><td>Build a Dataverse schema from scratch in maker portal</td></tr>
+      <tr><td>5–6</td><td>Ch 2: Plugin Development — write, sign, register, debug plugins in C#</td><td>1 hr</td><td>Working plugin in your developer environment</td></tr>
+      <tr><td>7</td><td>Ch 3: Canvas Apps, Model-Driven, PCF</td><td>1 hr</td><td>Model-driven app with custom PCF field control</td></tr>
+      <tr><td>8</td><td>Ch 4: Power Automate — all flow types, error handling, custom connectors</td><td>1 hr</td><td>Custom OAuth 2.0 connector built and tested</td></tr>
+      <tr><td>9</td><td>Ch 5 + 6: JavaScript Xrm model + Plugin advanced patterns</td><td>1 hr</td><td>Form script with Azure Function integration</td></tr>
+      <tr><td>10</td><td>Ch 7: Graph API, webhooks, data operations at scale</td><td>1 hr</td><td>Power Automate flow calling Graph API with app permissions</td></tr>
+      <tr><td>11</td><td>Ch 8: ALM, Solutions, PAC CLI, GitHub Actions pipeline</td><td>1 hr</td><td>Full CI/CD pipeline exporting and deploying a solution</td></tr>
+      <tr><td>12</td><td>Full practice exams × 2 + gap review + speed runs on weak areas</td><td>2 hrs</td><td>Score 75%+ on both practice runs</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout tip"><strong>✅ Study Strategy That Works</strong>
+    Read once for concepts. Then go hands-on — make.powerapps.com has a free developer trial. Then read again. Concepts that felt abstract become crystalline after you've touched the real thing. The hands-on step in the middle is not optional — it's where 30% of the learning happens.</div>
+</section>
+
+<!-- CH 1: TECHNICAL DESIGN -->
+<section id="ch1" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 01</div>
+    <div class="chapter-title-block">
+      <h2>Creating a Technical Design</h2>
+      <p>Choosing the right tool, justifying the choice, identifying constraints</p>
+    </div>
+  </div>
+  <p>PL-400 doesn't just test code — it tests your ability to think like an architect. Given a business scenario, you must choose the correct technology, justify it, and identify trade-offs. This chapter gives you the decision framework.</p>
+
+  <h3 id="ch1-when">Dataverse vs SharePoint: The Master Decision Matrix</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Criteria</th><th>Choose Dataverse</th><th>Choose SharePoint Lists</th></tr></thead>
+    <tbody>
+      <tr><td>Data volume</td><td>Millions of rows, complex queries</td><td>Under ~5,000 rows per view (delegation limits)</td></tr>
+      <tr><td>Relationships</td><td>Complex 1:N, N:N, rollup columns, lookups</td><td>Simple lookup columns</td></tr>
+      <tr><td>Business logic</td><td>Server-side plugins, workflows, calculated columns</td><td>Simple validation rules or Power Automate</td></tr>
+      <tr><td>Row-level security</td><td>Security roles + Business Units + Field Security Profiles</td><td>SharePoint item-level permissions (limited)</td></tr>
+      <tr><td>Offline access</td><td>Yes — model-driven apps with offline profiles</td><td>Limited (SharePoint mobile app)</td></tr>
+      <tr><td>Reporting / dashboards</td><td>Native Power BI, Dataverse views, charts, dashboards</td><td>Requires external connection</td></tr>
+      <tr><td>Cost</td><td>Per-user or per-app premium license required</td><td>Included in M365 license</td></tr>
+      <tr><td>Audit trail</td><td>Native field-level auditing</td><td>SharePoint version history (item level only)</td></tr>
+      <tr><td>Document storage</td><td>SharePoint integration for file columns</td><td>Native document library</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout exam"><strong>🎯 EXAM TRAP — The Most Common Wrong Answer</strong>
+    When a scenario says "millions of records with row-level security and complex reporting" — the answer is <strong>Dataverse</strong>. When it says "document collaboration" or "M365 is already licensed and data is under 5,000 items" — the answer tips toward <strong>SharePoint</strong>. Cost is a legitimate factor in exam scenarios.</div>
+
+  <div class="analogy">SharePoint Lists = a spreadsheet pinned to a wall. Great for simple team data, easily visible, no setup cost. Dataverse = a proper relational database with a security guard at every row and field. You don't bring a database where a spreadsheet works — but you don't run a hospital patient system on a spreadsheet either.</div>
+
+  <h4>Canvas App vs Model-Driven App vs Power Pages</h4>
+  <div class="compare-grid">
+    <div class="compare-card">
+      <h5>🎨 Canvas App</h5>
+      <ul>
+        <li>Pixel-perfect custom UI</li>
+        <li>Connects to 900+ data sources</li>
+        <li>Works with non-Dataverse data</li>
+        <li>Mobile-first friendly</li>
+        <li>Power Fx formula language</li>
+        <li>Best for: task-specific apps, custom UX requirements</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <h5>🏗️ Model-Driven App</h5>
+      <ul>
+        <li>UI generated from Dataverse metadata</li>
+        <li>Dataverse-only data source</li>
+        <li>Built-in business logic (rules, BPF, views)</li>
+        <li>Native offline profiles</li>
+        <li>Best for: complex business processes, CRM-like apps</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <h5>🌐 Power Pages</h5>
+      <ul>
+        <li>External-facing web portal</li>
+        <li>Anonymous or authenticated external users</li>
+        <li>Liquid templates + web templates</li>
+        <li>Table permissions for Dataverse security</li>
+        <li>Best for: customer self-service portals</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 id="ch1-security">The Four-Layer Dataverse Security Model</h3>
+  <p>Dataverse security is layered. A user must pass <strong>all applicable layers</strong> to access data. Each layer narrows access further.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Layer</th><th>Concept</th><th>Configured In</th><th>Granularity</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1. Azure AD</strong></td><td>User must have an Entra ID account and be licensed for Power Platform</td><td>Azure Portal / Microsoft 365 Admin</td><td>Environment access</td></tr>
+      <tr><td><strong>2. Security Roles</strong></td><td>CRUD + Append + Share privileges per table, per depth</td><td>Power Platform Admin Center or Settings</td><td>Table + operation level</td></tr>
+      <tr><td><strong>3. Business Units</strong></td><td>Organizational hierarchy — scopes which records a user can see based on ownership</td><td>Power Platform Admin Center</td><td>Record ownership depth</td></tr>
+      <tr><td><strong>4. Field Security Profiles</strong></td><td>Column-level masking and restriction (must be enabled on the column first)</td><td>Settings → Field Security Profiles</td><td>Column level</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>Security Role Privilege Depths — The Core Concept</h4>
+  <p>Every privilege in a security role has a <strong>depth</strong>. This is what the exam tests most frequently — not whether a user has permission, but HOW MUCH of the data they can access.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Depth Setting</th><th>What the User Can Access</th><th>Typical Use Case</th></tr></thead>
+    <tbody>
+      <tr><td><strong>User (Self)</strong></td><td>Only records they personally own</td><td>Field sales rep — sees only their own leads</td></tr>
+      <tr><td><strong>Business Unit</strong></td><td>All records owned by anyone in their Business Unit</td><td>Team manager — sees entire team's records</td></tr>
+      <tr><td><strong>Parent: Child Business Unit</strong></td><td>Their BU + all child BUs in the hierarchy below them</td><td>Regional manager — sees all regional teams</td></tr>
+      <tr><td><strong>Organization</strong></td><td>All records in the environment, regardless of owner</td><td>System administrator or global reporting role</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout exam"><strong>🎯 EXAM — Teams and Record Ownership</strong>
+    Records can be owned by a <strong>User</strong> or a <strong>Team</strong>. When a record is owned by a Team, all team members with the appropriate security role depth can access it through the BU depth. If you need multiple people to share "ownership" of records without a BU hierarchy change, use an <em>Owner Team</em>.</div>
+
+  <div class="callout warn"><strong>⚠️ System Administrators Bypass Field Security</strong>
+    The System Administrator role bypasses Field Security Profiles. If you need to hide a column even from system administrators, that is architecturally not possible with field security — you need a different data model (separate table, or application-layer enforcement).</div>
+
+  <h3 id="ch1-licensing">Licensing Architecture</h3>
+  <p>Licensing questions on PL-400 follow a "which license does this scenario require?" pattern. These are the lines that matter:</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>License</th><th>What It Covers</th><th>Key Limit / Note</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Power Apps per-user</strong></td><td>Unlimited apps + Dataverse + premium connectors</td><td>One user, all their apps</td></tr>
+      <tr><td><strong>Power Apps per-app</strong></td><td>One app (or one portal) + Dataverse</td><td>Cheaper for single-app deployments</td></tr>
+      <tr><td><strong>Power Apps Developer Plan</strong></td><td>Full developer environment — all premium features</td><td>Non-production only; cannot share with external users</td></tr>
+      <tr><td><strong>Power Automate per-user (with attended RPA)</strong></td><td>Unlimited flows + premium connectors + attended desktop flows</td><td>Most comprehensive for developers</td></tr>
+      <tr><td><strong>Power Automate per-flow</strong></td><td>One flow with unlimited runs, shared across organization</td><td>Best for high-volume shared processes</td></tr>
+      <tr><td><strong>Unattended RPA add-on</strong></td><td>Allows desktop flows to run without a logged-in user</td><td>Per machine; requires base Automate license</td></tr>
+      <tr><td><strong>Power Pages capacity</strong></td><td>External portal — authenticated or anonymous users</td><td>Priced by authenticated users or anonymous sessions</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout exam"><strong>🎯 EXAM — Premium Connectors Require Premium Licenses</strong>
+    Any connector not labeled "Standard" in Power Platform is a <strong>premium connector</strong> and requires a premium license (Power Apps per-user, per-app, or Power Automate per-user/per-flow). This includes the Dataverse connector, the HTTP connector, and most third-party connectors. If a flow uses any premium connector, every user who triggers it needs a premium license — OR the flow itself needs a per-flow license.</div>
+
+  <div class="quiz-block">
+    <h4>🧠 Chapter 1 Quiz</h4>
+    <div class="quiz-q">Q: A company needs to store 2 million customer records with row-level security based on the salesperson who owns each record, plus managers must see their entire team's records. Which data store is most appropriate?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) SharePoint List with item-level permissions per salesperson</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Dataverse with Security Roles (User-depth for reps, BU-depth for managers) and Business Units</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Azure SQL with a Power Apps custom connector</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) SharePoint List with Power Automate enforcing row-level access</button>
+    <div class="quiz-explain"><strong>Correct: B.</strong> SharePoint has a 5,000-item view threshold and cannot natively do row-level security based on organizational hierarchy. Azure SQL is valid but adds cost and complexity when Dataverse provides BU-based security natively. Dataverse + Security Roles + Business Units is exactly what this scenario describes.</div>
+  </div>
+</section>
+
+<!-- CH 2: DATAVERSE -->
+<section id="ch2" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 02</div>
+    <div class="chapter-title-block">
+      <h2>Dataverse Deep Dive</h2>
+      <p>Tables, relationships, plugins, and the Web API — the engine of Power Platform</p>
+    </div>
+  </div>
+  <p>Dataverse is not just a database — it's a relational engine with built-in security, metadata-driven APIs, auditing, business logic execution, and event pipelines. Understanding its internals is what separates a Power Platform developer from a Power Platform user.</p>
+
+  <h3 id="ch2-tables">Table Types and Column Types</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Table Type</th><th>Description</th><th>Key Trait to Remember</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Standard</strong></td><td>Regular data table with rows, columns, relationships</td><td>Has an Owner field by default (User or Team ownership)</td></tr>
+      <tr><td><strong>Activity</strong></td><td>Special time-stamped event table (Email, Task, Phone Call)</td><td>Inherits from ActivityPointer; shows in activity timeline on forms</td></tr>
+      <tr><td><strong>Virtual</strong></td><td>Table backed by external data source — data NOT stored in Dataverse</td><td>Read-only by default; requires data provider; cannot have FK relationships</td></tr>
+      <tr><td><strong>Elastic</strong></td><td>High-scale table backed by Azure Cosmos DB</td><td>Eventual consistency; no traditional relationships; good for IoT/telemetry</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout exam"><strong>🎯 EXAM TRAP — Virtual Tables</strong>
+    Virtual tables do NOT store data in Dataverse. Data remains in the external system. They appear to Power Apps makers like regular tables, but queries go to the external provider at query time. You <strong>cannot</strong> create lookup relationships from virtual tables to standard Dataverse tables (no FK enforcement exists).</div>
+
+  <h4>Column Types That Appear on the Exam</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Column Type</th><th>Description</th><th>Key Exam Note</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Lookup</strong></td><td>Foreign key to another table (creates N:1 relationship)</td><td>Stores the related record's GUID; creates relationship automatically</td></tr>
+      <tr><td><strong>Choice (Option Set)</strong></td><td>Dropdown of predefined values</td><td>Global choices can be reused across multiple tables; Local choices cannot</td></tr>
+      <tr><td><strong>Formula</strong></td><td>Calculated at query time using Power Fx (same record's columns)</td><td>Read-only; cannot be used in plugin Pre-Validation; not stored in DB</td></tr>
+      <tr><td><strong>Rollup</strong></td><td>Aggregates data from related child records (Sum, Count, Min, Max, Avg)</td><td>Updates every hour or on-demand — NOT real-time</td></tr>
+      <tr><td><strong>Auto Number</strong></td><td>Generates sequential or pattern-based IDs (e.g., CASE-0001)</td><td>Cannot be edited after record creation</td></tr>
+      <tr><td><strong>File / Image</strong></td><td>Stores binary content directly in Dataverse</td><td>File column max size is configurable up to 128 MB</td></tr>
+      <tr><td><strong>Polymorphic Lookup</strong></td><td>A lookup that can point to multiple table types</td><td>The "Customer" field on Contact (Account OR Contact)</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout warn"><strong>⚠️ Rollup vs Formula Column — They Are Very Different</strong>
+    A <strong>Rollup</strong> column aggregates from related records across tables (e.g., total revenue from all Opportunities on an Account). A <strong>Formula</strong> column computes from other columns on the <em>same record</em> only (e.g., full name = first + last). They are frequently confused in exam scenarios.</div>
+
+  <h3 id="ch2-relationships">Relationship Types</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Type</th><th>Example</th><th>How to Create</th><th>Key Behavior</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1:N (One-to-Many)</strong></td><td>Account → many Contacts</td><td>Add Lookup column to child table</td><td>Cascade behaviors (Delete, Share, Assign, Reparent)</td></tr>
+      <tr><td><strong>N:1</strong></td><td>Contact → one Account</td><td>Same relationship, child's perspective</td><td>Same relationship, different viewpoint</td></tr>
+      <tr><td><strong>N:N (Native)</strong></td><td>Cases ↔ Knowledge Articles</td><td>Use N:N relationship builder</td><td>Creates system-managed intersect table (no custom columns)</td></tr>
+      <tr><td><strong>N:N (Manual / Junction)</strong></td><td>Contacts ↔ Projects with Role attribute</td><td>Create table with two Lookup columns</td><td>Can store attributes ON the relationship itself</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout exam"><strong>🎯 KEY — Native N:N vs Manual Junction Table</strong>
+    If you need to store <strong>attributes on the relationship itself</strong> (e.g., "the role a Contact plays on a Project, and when they started") — you MUST use a <strong>manual junction table with two lookup columns</strong>. Native N:N creates a system-managed intersect table with no custom columns. This distinction appears on multiple PL-400 questions.</div>
+
+  <h4>Cascade Behaviors on 1:N Relationships</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Action on Parent</th><th>Cascade Option</th><th>Effect on Children</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="4">Delete</td><td><strong>Cascade</strong></td><td>Delete all child records</td></tr>
+      <tr><td><strong>Restrict</strong></td><td>Prevent parent deletion if any children exist</td></tr>
+      <tr><td><strong>Remove Link</strong></td><td>Null out the lookup on children (orphan them, keep children)</td></tr>
+      <tr><td><strong>No Cascade</strong></td><td>Do nothing — children remain with dangling reference</td></tr>
+      <tr><td>Assign / Share</td><td><strong>Cascade</strong></td><td>All children receive same assignment or sharing</td></tr>
+      <tr><td>Assign / Share</td><td><strong>User-Owned</strong></td><td>Only children owned by same user as the parent</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 id="ch2-plugins">Plugin Development in C#</h3>
+  <p>Plugins are server-side C# assemblies that execute within the Dataverse event pipeline. They are synchronous with the database transaction (when run in Stage 20 or Stage 40 sync), can cancel operations, modify data mid-flight, and call external APIs. If you know SharePoint event receivers, think of plugins as the same concept — but with richer context, better security, and a proper retry model.</p>
+
+  <h4>The Plugin Execution Pipeline</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Stage</th><th>#</th><th>Timing</th><th>In Transaction?</th><th>Can Cancel?</th><th>Async Available?</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Pre-Validation</strong></td><td>10</td><td>Before security check and before DB transaction</td><td>❌ No</td><td>✅ Yes</td><td>❌ No</td></tr>
+      <tr><td><strong>Pre-Operation</strong></td><td>20</td><td>After security check, within transaction, before DB write</td><td>✅ Yes</td><td>✅ Yes</td><td>❌ No</td></tr>
+      <tr><td><strong>Main Operation</strong></td><td>30</td><td>Platform writes to the DB</td><td>✅ Yes</td><td>Not a plugin stage</td><td>N/A</td></tr>
+      <tr><td><strong>Post-Operation</strong></td><td>40</td><td>After DB write, within transaction (sync) or after commit (async)</td><td>✅ (sync) / ❌ (async)</td><td>✅ (sync only)</td><td>✅ Yes</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout warn"><strong>⚠️ Stage 10 vs Stage 20 — Critical Difference</strong>
+    Pre-Validation (Stage 10) runs <strong>outside the database transaction</strong>. Any Dataverse writes you perform inside it will NOT be rolled back if the main operation fails. Use Stage 20 (Pre-Operation) when your logic must be atomic with the main operation. Use Stage 10 only for lightweight validation that doesn't write data.</div>
+
+  <h4>Plugin Code — The Full Production Pattern</h4>
+  <span class="code-label">C# — Complete IPlugin Implementation</span>
+  <pre><code><span class="kw">using</span> Microsoft.Xrm.Sdk;
+<span class="kw">using</span> Microsoft.Xrm.Sdk.Query;
+<span class="kw">using</span> System;
+
+<span class="kw">namespace</span> <span class="ty">Contoso.Plugins</span>
+{
+    <span class="kw">public class</span> <span class="ty">ValidateAccountPlugin</span> : <span class="ty">IPlugin</span>
+    {
+        <span class="kw">private readonly string</span> _unsecureConfig; <span class="cm">// visible to customizers</span>
+        <span class="kw">private readonly string</span> _secureConfig;   <span class="cm">// encrypted in DB</span>
+
+        <span class="cm">// Constructor MUST match this signature for config injection from PRT</span>
+        <span class="kw">public</span> <span class="fn">ValidateAccountPlugin</span>(<span class="ty">string</span> unsecureConfig, <span class="ty">string</span> secureConfig)
+        {
+            _unsecureConfig = unsecureConfig ?? <span class="st">"https://api.example.com"</span>;
+            _secureConfig = secureConfig; <span class="cm">// e.g. API key, password</span>
+        }
+
+        <span class="kw">public void</span> <span class="fn">Execute</span>(<span class="ty">IServiceProvider</span> serviceProvider)
+        {
+            <span class="cm">// Step 1: Get execution context</span>
+            <span class="kw">var</span> context = (<span class="ty">IPluginExecutionContext</span>)serviceProvider
+                .<span class="fn">GetService</span>(<span class="kw">typeof</span>(<span class="ty">IPluginExecutionContext</span>));
+
+            <span class="cm">// Step 2: Get tracing service — your ONLY debug output in production</span>
+            <span class="kw">var</span> tracer = (<span class="ty">ITracingService</span>)serviceProvider
+                .<span class="fn">GetService</span>(<span class="kw">typeof</span>(<span class="ty">ITracingService</span>));
+
+            <span class="cm">// Step 3: Get org service factory</span>
+            <span class="kw">var</span> factory = (<span class="ty">IOrganizationServiceFactory</span>)serviceProvider
+                .<span class="fn">GetService</span>(<span class="kw">typeof</span>(<span class="ty">IOrganizationServiceFactory</span>));
+
+            <span class="cm">// Create service as the triggering user (context.UserId)</span>
+            <span class="kw">var</span> service = factory.<span class="fn">CreateOrganizationService</span>(context.UserId);
+
+            <span class="kw">try</span>
+            {
+                <span class="kw">if</span> (context.MessageName != <span class="st">"Create"</span> &amp;&amp; context.MessageName != <span class="st">"Update"</span>) <span class="kw">return</span>;
+
+                <span class="cm">// InputParameters["Target"] = the entity being created/updated</span>
+                <span class="kw">if</span> (!context.InputParameters.Contains(<span class="st">"Target"</span>)) <span class="kw">return</span>;
+                <span class="kw">var</span> target = context.InputParameters[<span class="st">"Target"</span>] <span class="kw">as</span> <span class="ty">Entity</span>;
+                <span class="kw">if</span> (target?.LogicalName != <span class="st">"account"</span>) <span class="kw">return</span>;
+
+                tracer.<span class="fn">Trace</span>(<span class="st">$"Plugin fired: {context.MessageName} on Account {target.Id}"</span>);
+
+                <span class="cm">// Validate revenue — cancel if negative</span>
+                <span class="kw">if</span> (target.Contains(<span class="st">"revenue"</span>))
+                {
+                    <span class="kw">var</span> revenue = target.GetAttributeValue&lt;<span class="ty">Money</span>&gt;(<span class="st">"revenue"</span>)?.Value ?? <span class="nu">0</span>;
+                    <span class="kw">if</span> (revenue &lt; <span class="nu">0</span>)
+                        <span class="kw">throw new</span> <span class="ty">InvalidPluginExecutionException</span>(
+                            <span class="st">"Revenue cannot be negative."</span>);
+                }
+
+                <span class="cm">// Enrich a computed field in Pre-Operation (Stage 20)</span>
+                <span class="kw">if</span> (target.Contains(<span class="st">"name"</span>))
+                    target[<span class="st">"con_nameslug"</span>] = target
+                        .GetAttributeValue&lt;<span class="ty">string</span>&gt;(<span class="st">"name"</span>)?
+                        .ToLower().Replace(<span class="st">" "</span>, <span class="st">"-"</span>);
+            }
+            <span class="kw">catch</span> (<span class="ty">InvalidPluginExecutionException</span>) { <span class="kw">throw</span>; }
+            <span class="kw">catch</span> (<span class="ty">Exception</span> ex)
+            {
+                tracer.<span class="fn">Trace</span>(<span class="st">$"Error: {ex.Message}"</span>);
+                <span class="kw">throw new</span> <span class="ty">InvalidPluginExecutionException</span>(<span class="st">$"Plugin failed: {ex.Message}"</span>, ex);
+            }
+        }
+    }
+}</code></pre>
+
+  <div class="callout tip"><strong>✅ Plugin Best Practices</strong>
+    1. Always trace with ITracingService — it's your only debug tool in production (enable under Settings → System Settings → Customization → Enable Plugin Trace Log).<br>
+    2. Never hardcode credentials — use the Secure Config string from the Plugin Registration Tool.<br>
+    3. Always catch and re-throw as InvalidPluginExecutionException — raw exceptions show unfriendly messages.<br>
+    4. Plugins are stateless — don't store state in instance fields (plugin instances may be cached and reused).<br>
+    5. Keep sync plugins fast — user waits for them. External HTTP calls in sync plugins are a UX risk.</div>
+
+  <h4>Pre-Image and Post-Image</h4>
+  <p>When a plugin fires on Update, the <code>Target</code> entity in InputParameters contains <strong>only the fields being changed in this operation</strong> — not all fields on the record. To read the full current state of the record, you need a <strong>Pre-Image</strong> registered in the Plugin Registration Tool.</p>
+  <span class="code-label">C# — Using Pre-Image to Read Current Values Before Update</span>
+  <pre><code><span class="cm">// In PRT: on the plugin step, add Pre-Image → name it "PreImage"</span>
+<span class="kw">if</span> (context.PreEntityImages.Contains(<span class="st">"PreImage"</span>))
+{
+    <span class="kw">var</span> preImage = context.PreEntityImages[<span class="st">"PreImage"</span>];
+
+    <span class="cm">// Read OLD value (before update)</span>
+    <span class="kw">var</span> oldStatus = preImage.GetAttributeValue&lt;<span class="ty">OptionSetValue</span>&gt;(<span class="st">"statuscode"</span>)?.Value;
+
+    <span class="cm">// Read NEW value from Target (what user is setting now)</span>
+    <span class="kw">var</span> newStatus = target.Contains(<span class="st">"statuscode"</span>)
+        ? target.GetAttributeValue&lt;<span class="ty">OptionSetValue</span>&gt;(<span class="st">"statuscode"</span>)?.Value
+        : oldStatus; <span class="cm">// not being updated → same as old</span>
+
+    tracer.<span class="fn">Trace</span>(<span class="st">$"Status: {oldStatus} → {newStatus}"</span>);
+}</code></pre>
+
+  <div class="callout exam"><strong>🎯 EXAM — Pre/Post Image Availability Rules</strong>
+    Pre-Image: only available on <strong>Update</strong> and <strong>Delete</strong> messages.<br>
+    Post-Image: only available on <strong>Create</strong> and <strong>Update</strong> in Stage 40 (Post-Operation).<br>
+    A Pre-Image on Create makes no sense — there's no state before a creation.<br>
+    Post-Images on Delete make no sense — the record is gone. Know these rules cold.</div>
+
+  <h3 id="ch2-webapi">Dataverse Web API and FetchXML</h3>
+  <p>The Dataverse Web API is an OData v4 REST API. Every Dataverse operation is available via HTTP. You'll use this from custom connectors, PCF controls, Azure Functions, and Power Automate HTTP actions.</p>
+
+  <div class="table-wrap"><table>
+    <thead><tr><th>Operation</th><th>HTTP Method</th><th>Example URL</th></tr></thead>
+    <tbody>
+      <tr><td>Retrieve Single</td><td>GET</td><td><code>/api/data/v9.2/accounts(GUID)?$select=name,revenue</code></td></tr>
+      <tr><td>Retrieve Multiple</td><td>GET</td><td><code>/api/data/v9.2/accounts?$filter=revenue gt 1000000&$top=25&$orderby=name asc</code></td></tr>
+      <tr><td>Create</td><td>POST</td><td><code>/api/data/v9.2/accounts</code> (body: JSON)</td></tr>
+      <tr><td>Update (partial)</td><td>PATCH</td><td><code>/api/data/v9.2/accounts(GUID)</code> (body: changed fields only)</td></tr>
+      <tr><td>Delete</td><td>DELETE</td><td><code>/api/data/v9.2/accounts(GUID)</code></td></tr>
+      <tr><td>Associate (N:N)</td><td>POST</td><td><code>/api/data/v9.2/accounts(A_ID)/contact_assoc/$ref</code></td></tr>
+      <tr><td>Execute Action</td><td>POST</td><td><code>/api/data/v9.2/WinOpportunity</code> (bound or unbound)</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout tip"><strong>✅ Always Use $select</strong>
+    Omitting $select retrieves ALL columns, which is slow and consumes more API throughput. Always specify exactly the columns you need in every query.</div>
+
+  <h4>FetchXML vs QueryExpression vs LINQ</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Method</th><th>Used In</th><th>Strength</th><th>Limitation</th></tr></thead>
+    <tbody>
+      <tr><td><strong>FetchXML</strong></td><td>Web API, Advanced Find, Plugins, Reports</td><td>Full join support, aggregates, works in Web API</td><td>XML string — error-prone to write manually</td></tr>
+      <tr><td><strong>QueryExpression</strong></td><td>Plugins / SDK code only</td><td>Strongly typed, IntelliSense, no string parsing</td><td>Not available via Web API</td></tr>
+      <tr><td><strong>LINQ (ServiceContext)</strong></td><td>SDK code only</td><td>Familiar C# syntax, compile-time type checking</td><td>Fewer features than QueryExpression; limited join support</td></tr>
+    </tbody>
+  </table></div>
+
+  <span class="code-label">C# — QueryExpression in a Plugin</span>
+  <pre><code><span class="kw">var</span> query = <span class="kw">new</span> <span class="ty">QueryExpression</span>(<span class="st">"contact"</span>)
+{
+    ColumnSet = <span class="kw">new</span> <span class="ty">ColumnSet</span>(<span class="st">"fullname"</span>, <span class="st">"emailaddress1"</span>),
+    Criteria = <span class="kw">new</span> <span class="ty">FilterExpression</span>
+    {
+        Conditions =
+        {
+            <span class="kw">new</span> <span class="ty">ConditionExpression</span>(<span class="st">"parentcustomerid"</span>, <span class="ty">ConditionOperator</span>.Equal, target.Id),
+            <span class="kw">new</span> <span class="ty">ConditionExpression</span>(<span class="st">"statecode"</span>, <span class="ty">ConditionOperator</span>.Equal, <span class="nu">0</span>)
+        }
+    },
+    TopCount = <span class="nu">50</span> <span class="cm">// ALWAYS limit — never retrieve unbounded sets in plugins</span>
+};
+
+<span class="kw">var</span> results = service.<span class="fn">RetrieveMultiple</span>(query);
+<span class="kw">foreach</span> (<span class="kw">var</span> contact <span class="kw">in</span> results.Entities)
+    tracer.<span class="fn">Trace</span>(<span class="st">$"Found: {contact.GetAttributeValue&lt;string&gt;("fullname")}"</span>);</code></pre>
+
+  <div class="quiz-block">
+    <h4>🧠 Chapter 2 Quiz</h4>
+    <div class="quiz-q">Q: A plugin on Account Update (Stage 20, Synchronous) reads the "Category" field via <code>target.Contains("industrycode")</code> and it sometimes returns false even though the Category field has a value on the record. What is the cause?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Stage 20 cannot read fields — use Stage 40</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) The Target entity on Update only contains fields being changed in this operation. "Category" is not in Target if it wasn't changed. Register a Pre-Image to read current field values.</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Field Security Profile is blocking the field</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Use RetrieveMultiple to get all fields</button>
+    <div class="quiz-explain"><strong>Correct: B.</strong> On an Update, Target contains only fields included in the update payload — not the full record. To read fields not being updated, register a Pre-Image on the plugin step in the Plugin Registration Tool. The Pre-Image is a snapshot of the full record before the update fires.</div>
+  </div>
+</section>
+
+<!-- CH 3: POWER APPS -->
+<section id="ch3" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 03</div>
+    <div class="chapter-title-block">
+      <h2>Power Apps Mastery</h2>
+      <p>Canvas apps, model-driven apps, Power Fx, and PCF controls</p>
+    </div>
+  </div>
+
+  <h3 id="ch3-canvas">Canvas Apps — Delegation</h3>
+  <p>Delegation is the most important canvas app concept for PL-400. When a function is <strong>delegable</strong>, Power Apps sends the filtering/sorting work to the data source (server-side). When it is NOT delegable, Power Apps downloads only the first 500 records (configurable to 2,000) and processes them in the browser — silently returning incomplete results for large datasets.</p>
+
+  <div class="callout exam"><strong>🎯 EXAM — The Blue Delegation Warning</strong>
+    Power Apps Studio shows a <strong>blue underline / warning triangle</strong> when a formula contains a non-delegable function. This is a signal the exam uses in scenario questions: "users are not seeing all records" = delegation problem.</div>
+
+  <div class="table-wrap"><table>
+    <thead><tr><th>Function</th><th>Dataverse</th><th>SharePoint</th><th>SQL Server</th></tr></thead>
+    <tbody>
+      <tr><td><code>Filter()</code></td><td>✅ Delegable</td><td>✅ Most conditions</td><td>✅ Delegable</td></tr>
+      <tr><td><code>Search()</code></td><td>✅ Delegable</td><td>✅ Delegable</td><td>❌ Not delegable</td></tr>
+      <tr><td><code>CountRows()</code></td><td>✅ Delegable</td><td>❌ Not delegable</td><td>✅ Delegable</td></tr>
+      <tr><td><code>Sort()</code></td><td>✅ Delegable</td><td>✅ Some columns</td><td>✅ Delegable</td></tr>
+      <tr><td><code>StartsWith()</code></td><td>✅ Delegable</td><td>✅ Delegable</td><td>❌ Not delegable</td></tr>
+      <tr><td><code>EndsWith()</code></td><td>❌ NOT delegable</td><td>❌ NOT delegable</td><td>❌ NOT delegable</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>Variable Types</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Type</th><th>Set With</th><th>Scope</th><th>Stores</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Global Variable</strong></td><td><code>Set(varName, value)</code></td><td>Entire app</td><td>Any single value (text, number, record, boolean)</td></tr>
+      <tr><td><strong>Context Variable</strong></td><td><code>UpdateContext({varName: value})</code></td><td>Current screen only</td><td>Single value — great for dialog state, form mode flags</td></tr>
+      <tr><td><strong>Collection</strong></td><td><code>Collect()</code> / <code>ClearCollect()</code></td><td>Entire app</td><td>Table of records — in-memory dataset</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>Essential Power Fx Patterns</h4>
+  <span class="code-label">Power Fx — Must-Know Patterns for PL-400</span>
+  <pre><code><span class="cm">// Patch: create or update a record</span>
+<span class="fn">Patch</span>(
+    Accounts,
+    <span class="fn">Defaults</span>(Accounts),          <span class="cm">// Defaults() = new record; LookUp() = update existing</span>
+    {
+        Name: TextInput_Name.Text,
+        Revenue: <span class="fn">Value</span>(TextInput_Revenue.Text),
+        <span class="st">'Account Category'</span>: <span class="st">'Account Category'</span>.Preferred
+    }
+)
+
+<span class="cm">// ForAll: bulk update multiple records</span>
+<span class="fn">ForAll</span>(
+    colSelectedItems,
+    <span class="fn">Patch</span>(Accounts, <span class="fn">LookUp</span>(Accounts, ID = ThisRecord.ID), {Status: <span class="st">"Reviewed"</span>})
+)
+
+<span class="cm">// IsBlank vs IsEmpty — EXAM TRAP</span>
+<span class="fn">IsBlank</span>(<span class="st">""</span>)                 <span class="cm">// TRUE  — blank string is blank</span>
+<span class="fn">IsBlank</span>(<span class="kw">null</span>)              <span class="cm">// TRUE  — null is blank</span>
+<span class="fn">IsEmpty</span>(<span class="st">""</span>)               <span class="cm">// FALSE — IsEmpty is for tables/collections only</span>
+<span class="fn">IsEmpty</span>(colMyCollection)  <span class="cm">// TRUE if collection has zero rows</span>
+
+<span class="cm">// Coalesce: return first non-blank value</span>
+<span class="fn">Coalesce</span>(TextInput1.Text, TextInput2.Text, <span class="st">"Default"</span>)
+
+<span class="cm">// With: compute once, reuse (avoids repeated lookups)</span>
+<span class="fn">With</span>(
+    {acc: <span class="fn">LookUp</span>(Accounts, Name = <span class="st">"Contoso"</span>)},
+    acc.Revenue &gt; <span class="nu">1000000</span> &amp;&amp; acc.NumberOfEmployees &gt; <span class="nu">50</span>
+)</code></pre>
+
+  <div class="callout exam"><strong>🎯 EXAM — IsBlank vs IsEmpty</strong>
+    <code>IsEmpty("")</code> returns <strong>FALSE</strong>. IsEmpty only checks if a table or collection has zero records. <code>IsBlank("")</code> returns TRUE. If an exam question asks how to check if a text field is empty, the answer is <code>IsBlank()</code>, not <code>IsEmpty()</code>.</div>
+
+  <h3 id="ch3-mda">Model-Driven Apps</h3>
+  <h4>Key Components</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Component</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Site Map</strong></td><td>Navigation — areas, groups, subareas linking to tables or dashboards</td></tr>
+      <tr><td><strong>Views</strong></td><td>Filtered and sorted list of records with specific columns shown</td></tr>
+      <tr><td><strong>Forms</strong></td><td>UI for viewing/editing a record (Main, Quick Create, Quick View, Card)</td></tr>
+      <tr><td><strong>Dashboards</strong></td><td>Combination of views, charts, and iFrames on a single screen</td></tr>
+      <tr><td><strong>Business Rules</strong></td><td>Client + server logic (show/hide/require/set) — no code required</td></tr>
+      <tr><td><strong>Business Process Flows</strong></td><td>Guided stage-by-stage process; can span multiple tables</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>Business Rules vs JavaScript vs Plugins</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Mechanism</th><th>Runs On</th><th>Can Query Dataverse?</th><th>Best For</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Business Rule</strong></td><td>Client + Server (scope = Entity) or Client only (scope = Form)</td><td>No</td><td>Show/hide/require/set fields based on other field values — no code</td></tr>
+      <tr><td><strong>Client Script (JS)</strong></td><td>Browser only</td><td>Via Xrm.WebApi (async)</td><td>Complex UI interactions requiring API calls or calculations</td></tr>
+      <tr><td><strong>Plugin (C#)</strong></td><td>Server only</td><td>Yes — fully</td><td>Data integrity, cross-record logic, calling external APIs, import validation</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout exam"><strong>🎯 EXAM — Business Rule Entity Scope</strong>
+    Business Rules scoped to <strong>Entity</strong> run as a real-time workflow on the server — enforcing on API writes, imports, and plugin operations, not just form saves. Scoped to <strong>All Forms</strong> or a specific form = client only. If a requirement says "enforce even when imported via API," set scope to Entity.</div>
+
+  <h3 id="ch3-pcf">PowerApps Component Framework (PCF)</h3>
+  <p>PCF controls are TypeScript/React components that replace the standard field or subgrid UI in Power Apps with custom rendering while staying fully integrated with the platform security and event model.</p>
+
+  <h4>Field vs Dataset Controls</h4>
+  <div class="compare-grid">
+    <div class="compare-card">
+      <h5>Field Control</h5>
+      <ul>
+        <li>Replaces a single field/column UI</li>
+        <li>Receives one value; can output one value</li>
+        <li>Example: star rating, color picker, barcode scanner</li>
+        <li>Manifest: &lt;property&gt; elements</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <h5>Dataset Control</h5>
+      <ul>
+        <li>Replaces a view or subgrid</li>
+        <li>Receives multiple records; can filter, sort, page</li>
+        <li>Example: Kanban board, calendar, custom data grid</li>
+        <li>Manifest: &lt;data-set&gt; element</li>
+      </ul>
+    </div>
+  </div>
+
+  <h4>PCF Lifecycle — Four Key Methods</h4>
+  <span class="code-label">TypeScript — PCF Control Interface</span>
+  <pre><code><span class="kw">export class</span> <span class="ty">StarRatingControl</span>
+    <span class="kw">implements</span> <span class="ty">ComponentFramework.StandardControl</span>&lt;<span class="ty">IInputs</span>, <span class="ty">IOutputs</span>&gt;
+{
+    <span class="kw">private</span> _value: <span class="ty">number</span>;
+    <span class="kw">private</span> _notifyOutputChanged: () =&gt; <span class="ty">void</span>;
+    <span class="kw">private</span> _container: <span class="ty">HTMLDivElement</span>;
+
+    <span class="cm">// Called ONCE when control first loads</span>
+    <span class="kw">public</span> <span class="fn">init</span>(
+        context: <span class="ty">ComponentFramework.Context</span>&lt;<span class="ty">IInputs</span>&gt;,
+        notifyOutputChanged: () =&gt; <span class="ty">void</span>,
+        state: <span class="ty">ComponentFramework.Dictionary</span>,
+        container: <span class="ty">HTMLDivElement</span>
+    ): <span class="ty">void</span> {
+        <span class="kw">this</span>._notifyOutputChanged = notifyOutputChanged;
+        <span class="kw">this</span>._container = container;
+        <span class="kw">this</span>._value = context.parameters.ratingValue.raw ?? <span class="nu">0</span>;
+        <span class="kw">this</span>.<span class="fn">render</span>();
+    }
+
+    <span class="cm">// Called when bound field value or form context changes</span>
+    <span class="kw">public</span> <span class="fn">updateView</span>(context: <span class="ty">ComponentFramework.Context</span>&lt;<span class="ty">IInputs</span>&gt;): <span class="ty">void</span> {
+        <span class="kw">this</span>._value = context.parameters.ratingValue.raw ?? <span class="nu">0</span>;
+        <span class="kw">this</span>.<span class="fn">render</span>(); <span class="cm">// re-render with new value</span>
+    }
+
+    <span class="cm">// Platform calls this AFTER notifyOutputChanged() to read new value</span>
+    <span class="kw">public</span> <span class="fn">getOutputs</span>(): <span class="ty">IOutputs</span> {
+        <span class="kw">return</span> { ratingValue: <span class="kw">this</span>._value };
+    }
+
+    <span class="cm">// Called when control is removed — clean up event listeners, timers</span>
+    <span class="kw">public</span> <span class="fn">destroy</span>(): <span class="ty">void</span> { }
+
+    <span class="kw">private</span> <span class="fn">render</span>(): <span class="ty">void</span> {
+        <span class="kw">this</span>._container.innerHTML = <span class="st">""</span>;
+        <span class="kw">for</span> (<span class="kw">let</span> i = <span class="nu">1</span>; i &lt;= <span class="nu">5</span>; i++) {
+            <span class="kw">const</span> star = document.<span class="fn">createElement</span>(<span class="st">"span"</span>);
+            star.textContent = i &lt;= <span class="kw">this</span>._value ? <span class="st">"★"</span> : <span class="st">"☆"</span>;
+            star.style.cursor = <span class="st">"pointer"</span>; star.style.fontSize = <span class="st">"24px"</span>;
+            star.<span class="fn">addEventListener</span>(<span class="st">"click"</span>, () =&gt; {
+                <span class="kw">this</span>._value = i;
+                <span class="kw">this</span>.<span class="fn">render</span>();
+                <span class="kw">this</span>._notifyOutputChanged(); <span class="cm">// Signal to platform: value changed</span>
+            });
+            <span class="kw">this</span>._container.<span class="fn">appendChild</span>(star);
+        }
+    }
+}</code></pre>
+
+  <div class="callout exam"><strong>🎯 EXAM — PCF Lifecycle Order</strong>
+    <code>init()</code> → <code>updateView()</code> (on every change) → <code>getOutputs()</code> (after notifyOutputChanged) → <code>destroy()</code> (on unload). The platform calls <code>getOutputs()</code> asynchronously after you call <code>notifyOutputChanged()</code> — they are not synchronous. Never call notifyOutputChanged() inside updateView() — that creates an infinite loop.</div>
+
+  <div class="quiz-block">
+    <h4>🧠 Chapter 3 Quiz</h4>
+    <div class="quiz-q">Q: A canvas app connected to SharePoint (50,000 records) has a gallery filtering by Status = "Active" AND Region = TextInput.Text. Users report incomplete results. What is the correct diagnosis and fix?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Use LookUp instead of Filter for multi-condition queries</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Multi-condition filters may not fully delegate on SharePoint. Only the first 500 records are downloaded and filtered locally. Move to Dataverse or simplify to a fully delegable single condition.</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Use ClearCollect to load all 50,000 records first, then filter the collection</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Increase the app's delegation limit to 50,000 in App Settings</button>
+    <div class="quiz-explain"><strong>Correct: B.</strong> SharePoint delegation has limitations with complex multi-condition filters. With 50,000 records, only the first 500 (default limit) are retrieved and filtered locally. ClearCollect with 50,000 records is a performance disaster. The delegation limit max is 2,000 — not a real fix. Dataverse has much stronger delegation support.</div>
+  </div>
+</section>
+
+<!-- CH 4: POWER AUTOMATE -->
+<section id="ch4" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 04</div>
+    <div class="chapter-title-block">
+      <h2>Power Automate</h2>
+      <p>Flow types, expressions, custom connectors, RPA, and error handling patterns</p>
+    </div>
+  </div>
+
+  <h3 id="ch4-flows">Flow Types</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Flow Type</th><th>Trigger</th><th>Primary Use</th><th>Key Limit</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Automated Cloud Flow</strong></td><td>Event (new row, new email, file created, etc.)</td><td>Event-driven automation — responds to data changes</td><td>Connector availability</td></tr>
+      <tr><td><strong>Instant Cloud Flow</strong></td><td>Manual button / API call / Power Apps trigger</td><td>On-demand user-triggered automation</td><td>Requires manual trigger</td></tr>
+      <tr><td><strong>Scheduled Cloud Flow</strong></td><td>Timer / recurrence</td><td>Batch jobs, nightly reports, data syncs</td><td>Minimum recurrence = 1 minute</td></tr>
+      <tr><td><strong>Desktop Flow (RPA)</strong></td><td>Triggered by cloud flow or run manually</td><td>Automate legacy UI systems not accessible via API</td><td>Requires registered machine + RPA license</td></tr>
+      <tr><td><strong>Business Process Flow</strong></td><td>Stage transitions in model-driven apps</td><td>Guide users through multi-stage processes with mandatory steps</td><td>Max 30 stages, 30 steps per stage</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 id="ch4-expressions">Expressions — The Full Reference</h3>
+  <span class="code-label">Power Automate Expressions — All the Ones That Matter</span>
+  <pre><code><span class="cm">// STRING FUNCTIONS</span>
+<span class="fn">concat</span>(variables(<span class="st">'FirstName'</span>), <span class="st">' '</span>, variables(<span class="st">'LastName'</span>))
+<span class="fn">toLower</span>(triggerBody()?[<span class="st">'name'</span>])
+<span class="fn">toUpper</span>(variables(<span class="st">'code'</span>))
+<span class="fn">substring</span>(variables(<span class="st">'text'</span>), <span class="nu">0</span>, <span class="nu">100</span>)       <span class="cm">// first 100 chars</span>
+<span class="fn">replace</span>(variables(<span class="st">'text'</span>), <span class="st">' '</span>, <span class="st">'-'</span>)
+<span class="fn">trim</span>(variables(<span class="st">'text'</span>))
+<span class="fn">split</span>(variables(<span class="st">'csv'</span>), <span class="st">','</span>)             <span class="cm">// returns array</span>
+
+<span class="cm">// NULL SAFETY — critical for dynamic properties</span>
+triggerBody()?[<span class="st">'optionalField'</span>]           <span class="cm">// ?[] returns null if missing, not error</span>
+<span class="fn">coalesce</span>(triggerBody()?[<span class="st">'field'</span>], <span class="st">'default'</span>)
+
+<span class="cm">// DATE / TIME</span>
+<span class="fn">utcNow</span>()                                   <span class="cm">// current UTC timestamp</span>
+<span class="fn">addDays</span>(<span class="fn">utcNow</span>(), <span class="nu">30</span>)                     <span class="cm">// 30 days from now</span>
+<span class="fn">addHours</span>(<span class="fn">utcNow</span>(), <span class="nu">-2</span>)                   <span class="cm">// 2 hours ago</span>
+<span class="fn">formatDateTime</span>(<span class="fn">utcNow</span>(), <span class="st">'dd/MM/yyyy'</span>)   <span class="cm">// date format (case-sensitive!)</span>
+<span class="fn">convertFromUtc</span>(<span class="fn">utcNow</span>(), <span class="st">'India Standard Time'</span>)
+<span class="cm">// Format: dd=day, MM=month (not mm=minutes!), yyyy=year</span>
+
+<span class="cm">// ARRAY OPERATIONS</span>
+<span class="fn">length</span>(variables(<span class="st">'myArray'</span>))
+<span class="fn">first</span>(variables(<span class="st">'myArray'</span>))
+<span class="fn">last</span>(variables(<span class="st">'myArray'</span>))
+<span class="fn">union</span>(array1, array2)                      <span class="cm">// merged (no duplicates)</span>
+<span class="fn">intersection</span>(array1, array2)              <span class="cm">// common elements only</span>
+<span class="fn">contains</span>(variables(<span class="st">'myArray'</span>), <span class="st">'value'</span>)  <span class="cm">// true if value in array</span>
+<span class="fn">contains</span>(variables(<span class="st">'text'</span>), <span class="st">'sub'</span>)      <span class="cm">// also works for substring check</span>
+
+<span class="cm">// REFERENCING ACTION OUTPUT</span>
+triggerBody()?[<span class="st">'value'</span>]                  <span class="cm">// from trigger output</span>
+outputs(<span class="st">'Get_a_row_by_ID'</span>)?[<span class="st">'body/name'</span>] <span class="cm">// from a previous action</span>
+items(<span class="st">'Apply_to_each'</span>)?[<span class="st">'email'</span>]        <span class="cm">// current item in loop</span></code></pre>
+
+  <div class="callout warn"><strong>⚠️ formatDateTime Case Sensitivity — Classic Exam Trap</strong>
+    In Power Automate date format strings: <code>MM</code> = months (capital M), <code>mm</code> = minutes (lowercase m), <code>dd</code> = day, <code>yyyy</code> = 4-digit year. Writing "DD/MM/YYYY" (all uppercase) is wrong — <code>DD</code> and <code>YYYY</code> are not valid tokens. The correct format for 25/01/2026 is <code>'dd/MM/yyyy'</code>.</div>
+
+  <h4>Error Handling — Try/Catch Pattern</h4>
+  <p>Power Automate doesn't have native try/catch, but you simulate it with Scopes and the "Run After" configuration.</p>
+  <div class="callout exam"><strong>🎯 EXAM — The Try/Catch Scope Pattern</strong>
+    1. Add a <strong>Scope</strong> action — name it "Try" — put your main logic inside<br>
+    2. Add another <strong>Scope</strong> action — name it "Catch" — AFTER the Try scope<br>
+    3. On the Catch scope: click ••• → Configure Run After → check <strong>"has failed"</strong> and <strong>"has timed out"</strong> (uncheck "succeeded" and "skipped")<br>
+    4. Inside Catch: add error notification, log the failure, terminate with failure<br>
+    This is the ONLY built-in error handling pattern in Power Automate and appears on multiple PL-400 questions.</div>
+
+  <h3 id="ch4-connectors">Custom Connectors</h3>
+  <p>Custom connectors expose any REST or SOAP API to Power Platform. Every connector is an OpenAPI definition with authentication, actions, and triggers.</p>
+
+  <h4>The 6-Step Creation Process</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Step</th><th>Action</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Import OpenAPI (Swagger) or define from blank</td><td>Also accepts Postman collection import</td></tr>
+      <tr><td>2</td><td>Set General info (host, base URL, HTTPS scheme)</td><td>Must match actual API endpoint exactly</td></tr>
+      <tr><td>3</td><td>Configure Security (authentication type)</td><td>No auth / API Key / Basic / OAuth 2.0 / Windows</td></tr>
+      <tr><td>4</td><td>Define Actions (HTTP method + path = one action)</td><td>Can also define webhook triggers here</td></tr>
+      <tr><td>5</td><td>Define request/response schemas (JSON Schema)</td><td>Response schema enables dynamic content in flows</td></tr>
+      <tr><td>6</td><td>Test — create connection, test each action</td><td>Must test before saving the connector definition</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout exam"><strong>🎯 EXAM — Policy Templates</strong>
+    Custom connectors support <strong>Policy Templates</strong> that transform requests/responses without changing the API:<br>
+    • <strong>Set Header</strong> — inject a header on every request (e.g., API-Version: 2024-01-01)<br>
+    • <strong>Set Query Parameter</strong> — inject a query param on every call<br>
+    • <strong>Route Request</strong> — conditionally route to different endpoints<br>
+    • <strong>Convert Array to Object</strong> — reshape response structure<br>
+    These require no code and are configured in the connector designer's policy editor.</div>
+
+  <h3 id="ch4-rpa">RPA and Desktop Flows</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Concept</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Desktop Flow</strong></td><td>Automates Windows desktop UI — clicks, typing, screen scraping in legacy apps</td></tr>
+      <tr><td><strong>Attended Bot</strong></td><td>Runs on user's logged-in machine; user can watch; requires Power Automate for Desktop</td></tr>
+      <tr><td><strong>Unattended Bot</strong></td><td>Runs without user present; requires Unattended RPA Add-on license + dedicated machine</td></tr>
+      <tr><td><strong>Machine Registration</strong></td><td>Target machine must be registered in Power Automate portal → Machines</td></tr>
+      <tr><td><strong>Machine Group</strong></td><td>Pool of registered machines — load balances flows across available machines</td></tr>
+      <tr><td><strong>Cloud → Desktop trigger</strong></td><td>Cloud flow uses "Run a desktop flow" action to trigger the RPA bot</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="quiz-block">
+    <h4>🧠 Chapter 4 Quiz</h4>
+    <div class="quiz-q">Q: A flow uses an HTTP action to call an external API. Sometimes the API returns 500. Requirements: on 500, wait 5 minutes and retry once; if still failing, email IT support. What is the correct approach?</div>
+    <button class="quiz-opt" onclick="answer(this,true)">A) Set the HTTP action retry policy to Fixed Interval (count=1, interval=PT5M). Wrap in a Scope (Try). Add a second Scope (Catch) with Run After = Has Failed. Inside Catch, send the email.</button>
+    <button class="quiz-opt" onclick="answer(this,false)">B) Use a Do Until loop around the HTTP action with a 5-minute delay</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Add a Terminate action after the HTTP call to catch the error</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Use a Condition checking the HTTP status code to trigger retry logic</button>
+    <div class="quiz-explain"><strong>Correct: A.</strong> The HTTP action has a built-in Retry Policy (Settings → Retry Policy → Fixed Interval: count=1, interval=PT5M). After the automatic retry, if still failing, the Try Scope fails → the Catch Scope triggers (Run After: Has Failed) → sends the email. This is the exam's target pattern for error handling.</div>
+  </div>
+</section>
+
+<!-- CH 5: EXTEND UX -->
+<section id="ch5" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 05</div>
+    <div class="chapter-title-block">
+      <h2>Extending the User Experience</h2>
+      <p>JavaScript client scripting and the Xrm object model</p>
+    </div>
+  </div>
+
+  <h3 id="ch5-xrm">The Xrm Object Model</h3>
+  <p>The Xrm object model is the JavaScript API for interacting with model-driven app forms and views. It is the <strong>only supported</strong> way to write form scripts. Direct DOM manipulation is unsupported and will break in future updates.</p>
+
+  <div class="callout warn"><strong>⚠️ NEVER USE Xrm.Page — It Is Removed</strong>
+    <code>Xrm.Page</code> was deprecated and is removed in Unified Interface. Any code using it will fail. <strong>Always</strong> use <code>executionContext.getFormContext()</code>. If you see <code>Xrm.Page</code> as an answer option on the exam, it is almost certainly <strong>wrong</strong>. This is the single most tested "deprecated API" question on PL-400.</div>
+
+  <h4>The Correct Pattern — Always Start Here</h4>
+  <span class="code-label">JavaScript — Production-Ready Form Script Pattern</span>
+  <pre><code><span class="st">"use strict"</span>;
+
+<span class="cm">// Namespace pattern prevents global variable conflicts</span>
+<span class="kw">var</span> <span class="ty">Contoso</span> = <span class="ty">Contoso</span> || {};
+<span class="ty">Contoso</span>.AccountForm = (<span class="kw">function</span> () {
+
+    <span class="cm">// OnLoad: receives executionContext because checkbox is checked in form designer</span>
+    <span class="kw">function</span> <span class="fn">onLoad</span>(executionContext) {
+        <span class="kw">const</span> formContext = executionContext.<span class="fn">getFormContext</span>(); <span class="cm">// correct way</span>
+
+        <span class="cm">// Register onChange on a field</span>
+        formContext.<span class="fn">getAttribute</span>(<span class="st">"revenue"</span>).<span class="fn">addOnChange</span>(<span class="fn">onRevenueChange</span>);
+
+        <span class="cm">// Set required level</span>
+        formContext.<span class="fn">getAttribute</span>(<span class="st">"description"</span>).<span class="fn">setRequiredLevel</span>(<span class="st">"required"</span>);
+        <span class="cm">// Options: "none" | "recommended" | "required"</span>
+
+        <span class="cm">// Show/hide a control</span>
+        formContext.<span class="fn">getControl</span>(<span class="st">"con_customfield"</span>).<span class="fn">setVisible</span>(<span class="kw">false</span>);
+    }
+
+    <span class="kw">function</span> <span class="fn">onRevenueChange</span>(executionContext) {
+        <span class="kw">const</span> formContext = executionContext.<span class="fn">getFormContext</span>();
+        <span class="kw">const</span> revenue = formContext.<span class="fn">getAttribute</span>(<span class="st">"revenue"</span>).<span class="fn">getValue</span>();
+
+        <span class="kw">if</span> (revenue !== <span class="kw">null</span> &amp;&amp; revenue &gt; <span class="nu">1000000</span>) {
+            <span class="cm">// Show a notification banner on the form</span>
+            formContext.ui.<span class="fn">setFormNotification</span>(
+                <span class="st">"Large account: VP approval required."</span>,
+                <span class="st">"INFO"</span>,         <span class="cm">// "ERROR" | "WARNING" | "INFO"</span>
+                <span class="st">"revenueInfo"</span>  <span class="cm">// unique key to clear it later</span>
+            );
+        } <span class="kw">else</span> {
+            formContext.ui.<span class="fn">clearFormNotification</span>(<span class="st">"revenueInfo"</span>);
+        }
+    }
+
+    <span class="cm">// OnSave: can cancel the save using preventDefault</span>
+    <span class="kw">function</span> <span class="fn">onSave</span>(executionContext) {
+        <span class="kw">const</span> formContext = executionContext.<span class="fn">getFormContext</span>();
+        <span class="kw">const</span> phone = formContext.<span class="fn">getAttribute</span>(<span class="st">"telephone1"</span>).<span class="fn">getValue</span>();
+
+        <span class="kw">if</span> (!phone) {
+            <span class="cm">// Cancel the save</span>
+            executionContext.<span class="fn">getEventArgs</span>().<span class="fn">preventDefault</span>();
+            <span class="cm">// Show error on the field control (not on the attribute)</span>
+            formContext.<span class="fn">getControl</span>(<span class="st">"telephone1"</span>).<span class="fn">setNotification</span>(
+                <span class="st">"Phone number is required."</span>, <span class="st">"phoneErr"</span>
+            );
+        }
+    }
+
+    <span class="cm">// Expose only public functions</span>
+    <span class="kw">return</span> { onLoad: onLoad, onSave: onSave };
+}());
+<span class="cm">// Register as: Contoso.AccountForm.onLoad</span></code></pre>
+
+  <h3 id="ch5-events">Form Events Reference</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Event</th><th>When It Fires</th><th>Can Cancel?</th><th>Must Pass execContext?</th></tr></thead>
+    <tbody>
+      <tr><td><strong>OnLoad</strong></td><td>Form opens (new or existing record)</td><td>No</td><td><strong>Yes — must check box in form designer</strong></td></tr>
+      <tr><td><strong>OnSave</strong></td><td>User clicks Save, auto-save triggers, navigate away with changes</td><td>Yes — <code>preventDefault()</code></td><td><strong>Yes</strong></td></tr>
+      <tr><td><strong>OnChange</strong></td><td>Field value changes AND the field loses focus</td><td>No</td><td><strong>Yes</strong></td></tr>
+      <tr><td><strong>OnStageChange</strong></td><td>BPF stage changes (move forward or back)</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td><strong>PreSearch</strong></td><td>Just before a lookup control performs its search</td><td>No — but can add filter constraints</td><td>Yes</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout exam"><strong>🎯 EXAM TRAP — "Pass execution context as first parameter"</strong>
+    In the Form designer, when adding an event handler script, there is a checkbox: <strong>"Pass execution context as first parameter."</strong> This MUST be checked. If not checked, the function receives undefined as executionContext and fails with "Cannot read properties of undefined (reading 'getFormContext')". This is the single most common PL-400 gotcha on client script questions — look for it in scenario descriptions.</div>
+
+  <h4>Calling Dataverse from JavaScript — Xrm.WebApi</h4>
+  <span class="code-label">JavaScript — Xrm.WebApi Operations</span>
+  <pre><code><span class="cm">// Retrieve a single record</span>
+Xrm.WebApi.<span class="fn">retrieveRecord</span>(<span class="st">"account"</span>, accountId, <span class="st">"?$select=name,revenue,telephone1"</span>)
+    .<span class="fn">then</span>(<span class="kw">function</span>(result) {
+        console.<span class="fn">log</span>(<span class="st">"Name:"</span>, result[<span class="st">"name"</span>]);
+    }).<span class="fn">catch</span>(<span class="kw">function</span>(error) { console.<span class="fn">error</span>(error.message); });
+
+<span class="cm">// Retrieve multiple with filter</span>
+Xrm.WebApi.<span class="fn">retrieveMultipleRecords</span>(
+    <span class="st">"contact"</span>,
+    <span class="st">"?$select=fullname,emailaddress1&$filter=parentcustomerid/accountid eq "</span> + accountId
+).<span class="fn">then</span>(<span class="kw">function</span>(result) {
+    result.entities.<span class="fn">forEach</span>(<span class="kw">function</span>(c) { console.<span class="fn">log</span>(c.fullname); });
+});
+
+<span class="cm">// Create a record</span>
+Xrm.WebApi.<span class="fn">createRecord</span>(<span class="st">"account"</span>, { <span class="st">"name"</span>: <span class="st">"New Co"</span>, <span class="st">"telephone1"</span>: <span class="st">"555-1234"</span> })
+    .<span class="fn">then</span>(<span class="kw">function</span>(result) { console.<span class="fn">log</span>(<span class="st">"Created ID:"</span>, result.id); });
+
+<span class="cm">// Update a record</span>
+Xrm.WebApi.<span class="fn">updateRecord</span>(<span class="st">"account"</span>, accountId, { <span class="st">"telephone1"</span>: <span class="st">"555-9999"</span> });
+
+<span class="cm">// Delete a record</span>
+Xrm.WebApi.<span class="fn">deleteRecord</span>(<span class="st">"account"</span>, accountId);</code></pre>
+
+  <div class="quiz-block">
+    <h4>🧠 Chapter 5 Quiz</h4>
+    <div class="quiz-q">Q: A JavaScript OnChange handler on the "Status" field calls <code>executionContext.getFormContext()</code> and throws "Cannot read properties of undefined (reading 'getFormContext')". The function signature is <code>function onStatusChange(executionContext)</code>. What is the cause?</div>
+    <button class="quiz-opt" onclick="answer(this,true)">A) The "Pass execution context as first parameter" checkbox was not checked in the form event designer</button>
+    <button class="quiz-opt" onclick="answer(this,false)">B) executionContext is not available on OnChange — only OnLoad</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) The function should use Xrm.Page.data.entity instead</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) The function name must match the event name exactly</button>
+    <div class="quiz-explain"><strong>Correct: A.</strong> When "Pass execution context as first parameter" is unchecked, the function receives no arguments (or the wrong arguments). The variable name <code>executionContext</code> is undefined at runtime, causing the error on <code>.getFormContext()</code>. The fix is to check that box in the form designer's event configuration. Option C is wrong — Xrm.Page is removed from Unified Interface.</div>
+  </div>
+</section>
+
+<!-- CH 6: EXTEND PLATFORM -->
+<section id="ch6" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 06</div>
+    <div class="chapter-title-block">
+      <h2>Extending the Platform</h2>
+      <p>Plugin Registration Tool, Azure integration, service endpoints</p>
+    </div>
+  </div>
+
+  <h3 id="ch6-pluginreg">Plugin Registration Tool — Every Field</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Field</th><th>Options / Value</th><th>What It Controls</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Message</strong></td><td>Create, Update, Delete, Retrieve, Associate, etc.</td><td>Which Dataverse operation triggers the plugin</td></tr>
+      <tr><td><strong>Primary Entity</strong></td><td>Table logical name (e.g. "account", "contact")</td><td>Which table this step fires on</td></tr>
+      <tr><td><strong>Filtering Attributes</strong></td><td>Comma-separated column logical names</td><td>On Update: only fire when these fields change. <strong>Blank = fire on ANY update</strong> <span class="tag trap">TRAP</span></td></tr>
+      <tr><td><strong>Stage</strong></td><td>10 (Pre-Validation), 20 (Pre-Operation), 40 (Post-Operation)</td><td>When in the pipeline the plugin executes</td></tr>
+      <tr><td><strong>Execution Mode</strong></td><td>Synchronous or Asynchronous</td><td>Async only available at Stage 40</td></tr>
+      <tr><td><strong>Deployment</strong></td><td>Server Only, Offline Only, Both</td><td>Whether plugin fires when user is online, offline (mobile), or both</td></tr>
+      <tr><td><strong>Execution Order</strong></td><td>Integer (1, 2, 3...)</td><td>Multiple plugins on same Message/Entity/Stage — lower number runs first</td></tr>
+      <tr><td><strong>Unsecure Config</strong></td><td>Any string — visible to customizers</td><td>Non-sensitive config: API URLs, feature flags, timeout values</td></tr>
+      <tr><td><strong>Secure Config</strong></td><td>Any string — encrypted at rest in DB</td><td>Secrets: API keys, passwords, connection strings</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout exam"><strong>🎯 EXAM — Filtering Attributes Is a Performance Setting</strong>
+    Leaving Filtering Attributes <strong>blank</strong> on an Update step means the plugin fires on <strong>every field update</strong> — including irrelevant fields. Populating it with <code>revenue,statuscode</code> means the platform won't even invoke the plugin unless at least one of those fields is in the update payload. This is the exam's answer to "how to reduce unnecessary plugin executions" — set Filtering Attributes, not an early-return inside the plugin code.</div>
+
+  <h4>Secure Config Pattern in Code</h4>
+  <span class="code-label">C# — Reading Secure and Unsecure Config</span>
+  <pre><code><span class="kw">public class</span> <span class="ty">ExternalApiPlugin</span> : <span class="ty">IPlugin</span>
+{
+    <span class="kw">private readonly string</span> _apiEndpoint;
+    <span class="kw">private readonly string</span> _apiKey;
+
+    <span class="cm">// Exact constructor signature required — no optional parameters</span>
+    <span class="kw">public</span> <span class="fn">ExternalApiPlugin</span>(<span class="ty">string</span> unsecureConfig, <span class="ty">string</span> secureConfig)
+    {
+        <span class="cm">// Unsecure: visible to anyone with customization access</span>
+        _apiEndpoint = unsecureConfig ?? <span class="st">"https://api.example.com/v1"</span>;
+
+        <span class="cm">// Secure: encrypted — use for API keys, passwords</span>
+        <span class="kw">if</span> (<span class="ty">string</span>.<span class="fn">IsNullOrEmpty</span>(secureConfig))
+            <span class="kw">throw new</span> <span class="ty">InvalidPluginExecutionException</span>(
+                <span class="st">"Secure config (API key) not configured. Contact your administrator."</span>);
+        _apiKey = secureConfig;
+    }
+
+    <span class="kw">public void</span> <span class="fn">Execute</span>(<span class="ty">IServiceProvider</span> serviceProvider) { <span class="cm">/* use _apiKey here */</span> }
+}</code></pre>
+
+  <h3 id="ch6-azure">Azure Integration Patterns</h3>
+  <div class="compare-grid">
+    <div class="compare-card">
+      <h5>Azure Service Bus</h5>
+      <ul>
+        <li>Reliable message queuing</li>
+        <li>Messages persist if consumer offline</li>
+        <li>Dead-letter queue for failed messages</li>
+        <li>FIFO ordering guaranteed on queues</li>
+        <li>Register as Service Endpoint in PRT</li>
+        <li>Use for: guaranteed delivery integrations</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <h5>Azure Event Hub</h5>
+      <ul>
+        <li>High-throughput event streaming</li>
+        <li>Millions of events per second</li>
+        <li>Good for telemetry, IoT, analytics</li>
+        <li>Messages not retained long-term</li>
+        <li>Consumer group pattern</li>
+        <li>Use for: high-volume streaming scenarios</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <h5>Azure Function (Direct HTTP)</h5>
+      <ul>
+        <li>Webhook-style synchronous call</li>
+        <li>Plugin makes HTTP call to Function URL</li>
+        <li>Response returned synchronously to plugin</li>
+        <li>Use for: real-time validation against external system</li>
+        <li>Requires: HTTP call inside sync plugin</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout exam"><strong>🎯 EXAM — Service Bus vs Webhooks</strong>
+    Use <strong>Service Bus</strong> when: guaranteed delivery is required, consumer may be offline, message ordering matters, or you need a dead-letter queue for failures.<br>
+    Use <strong>Webhooks</strong> when: simple HTTP POST notification is enough, volume is low, consumer is always available.<br>
+    The exam question pattern: "the external system sometimes goes offline for maintenance periods" → Service Bus (messages queue up). "Simple notification for low-volume events" → Webhook.</div>
+
+  <h4>Registering a Service Endpoint in PRT</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Namespace Address</td><td>sb://yournamespace.servicebus.windows.net</td></tr>
+      <tr><td>Path</td><td>Queue name or Topic name (must exist in Azure)</td></tr>
+      <tr><td>Message Format</td><td>NHMessage, JSON, or XML (JSON most common)</td></tr>
+      <tr><td>SAS Key Name</td><td>From Azure portal → Shared Access Policies</td></tr>
+      <tr><td>SAS Key Value</td><td>The key value (Send permission is sufficient)</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout tip"><strong>✅ ILMerge for Third-Party DLLs</strong>
+    Plugins run in a sandboxed environment. You cannot install NuGet packages on the Dataverse server. If your plugin uses a third-party library (e.g., Newtonsoft.Json, RestSharp), you must <strong>merge all DLLs into a single assembly</strong> using ILMerge or ILRepack before registering. Alternatively, newer SDK versions support registering dependent assemblies separately in the PRT.</div>
+
+  <div class="quiz-block">
+    <h4>🧠 Chapter 6 Quiz</h4>
+    <div class="quiz-q">Q: An Account Update plugin runs hundreds of times daily but only needs to execute when "Revenue" or "Industry" fields change. What is the most efficient fix?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Add an if-statement in Execute() to exit early when those fields aren't changed</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Set Filtering Attributes to "revenue,industrycode" in the Plugin Registration Tool on the Update step</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Change the plugin to run asynchronously</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Create a separate plugin for each field</button>
+    <div class="quiz-explain"><strong>Correct: B.</strong> Filtering Attributes prevents the platform from invoking the plugin at all unless those fields are in the update payload. Option A (early exit in code) reduces work inside the plugin but doesn't prevent it being called — wasting platform resources on the invocation itself. B is both the exam answer and the architecturally correct solution.</div>
+  </div>
+</section>
+
+<!-- CH 7: INTEGRATION -->
+<section id="ch7" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 07</div>
+    <div class="chapter-title-block">
+      <h2>Integration &amp; Data Operations</h2>
+      <p>Microsoft Graph, webhooks vs Service Bus, and moving data at scale</p>
+    </div>
+  </div>
+
+  <h3 id="ch7-graph">Microsoft Graph API</h3>
+  <p>Microsoft Graph is the single unified API endpoint for all Microsoft 365 services — Teams, SharePoint, Outlook, OneDrive, Azure AD, Planner, and more. In Power Platform, you access it from Power Automate HTTP actions, custom connectors, or C# plugins calling outbound HTTP.</p>
+
+  <h4>Key Endpoints</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Resource</th><th>Base Endpoint</th><th>Common Operations</th></tr></thead>
+    <tbody>
+      <tr><td>Current user</td><td><code>https://graph.microsoft.com/v1.0/me</code></td><td>Profile, photo, manager, direct reports</td></tr>
+      <tr><td>Users (all)</td><td><code>https://graph.microsoft.com/v1.0/users</code></td><td>List, get, create, update users</td></tr>
+      <tr><td>Groups / Teams</td><td><code>https://graph.microsoft.com/v1.0/groups</code></td><td>List groups, members, create Teams</td></tr>
+      <tr><td>SharePoint sites</td><td><code>https://graph.microsoft.com/v1.0/sites</code></td><td>Get site, list items, manage files</td></tr>
+      <tr><td>Emails</td><td><code>https://graph.microsoft.com/v1.0/me/messages</code></td><td>List, send, reply, forward messages</td></tr>
+      <tr><td>Calendar events</td><td><code>https://graph.microsoft.com/v1.0/me/events</code></td><td>List, create, update, delete events</td></tr>
+      <tr><td>OneDrive files</td><td><code>https://graph.microsoft.com/v1.0/me/drive/root/children</code></td><td>List, upload, download files</td></tr>
+      <tr><td>Teams channel messages</td><td><code>https://graph.microsoft.com/v1.0/teams/{id}/channels/{id}/messages</code></td><td>Post messages to a channel</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>Delegated vs Application Permissions</h4>
+  <div class="compare-grid">
+    <div class="compare-card">
+      <h5>Delegated Permissions</h5>
+      <ul>
+        <li>Act on behalf of a signed-in user</li>
+        <li>User must be logged in at the time</li>
+        <li>Limited to what that user has access to</li>
+        <li>Used in: interactive flows, canvas apps calling Graph</li>
+        <li>OAuth flow: Authorization Code</li>
+        <li>User consent or admin consent required</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <h5>Application Permissions</h5>
+      <ul>
+        <li>Application acts as itself — no user context</li>
+        <li>Works without any user logged in</li>
+        <li>Access to ALL tenant data (scoped by policy)</li>
+        <li>Used in: scheduled flows, background jobs, plugins</li>
+        <li>OAuth flow: Client Credentials (client_id + client_secret)</li>
+        <li>Admin consent ALWAYS required</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout exam"><strong>🎯 EXAM — Scheduled Flows Need Application Permissions</strong>
+    If a flow runs on a schedule (midnight sync, hourly report) with no user logged in and needs to call the Graph API, it MUST use <strong>Application permissions</strong> with the <strong>Client Credentials flow</strong>. Delegated permissions require an active user session. This scenario ("a nightly batch flow reads all users' email" or "a scheduled flow updates all SharePoint sites") always requires Application + admin consent.</div>
+
+  <span class="code-label">Power Automate — HTTP Action Calling Graph API</span>
+  <pre><code>Method: POST
+URI: https://graph.microsoft.com/v1.0/teams/@{variables('teamId')}/channels/@{variables('channelId')}/messages
+
+Authentication:
+  Type: Active Directory OAuth
+  Tenant: @{variables('tenantId')}
+  Audience: https://graph.microsoft.com
+  Client ID: [from app registration]
+  Client Secret: [stored in environment variable or Key Vault reference]
+
+Headers:
+  Content-Type: application/json
+
+Body:
+{
+  "body": {
+    "contentType": "html",
+    "content": "&lt;b&gt;Record Created:&lt;/b&gt; @{triggerBody()?['name']}"
+  }
+}</code></pre>
+
+  <h3 id="ch7-webhooks">Webhooks vs Azure Service Bus</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Criteria</th><th>Webhook (HTTP Endpoint)</th><th>Azure Service Bus</th></tr></thead>
+    <tbody>
+      <tr><td>Message delivery</td><td>Fire and forget — HTTP POST to endpoint</td><td>Guaranteed delivery with configurable retry</td></tr>
+      <tr><td>Consumer availability</td><td>Must be online and responding when event fires</td><td>Can be offline — messages persist in queue</td></tr>
+      <tr><td>Message ordering</td><td>Not guaranteed</td><td>FIFO guaranteed on queues</td></tr>
+      <tr><td>Dead-lettering</td><td>No — lost after max retries</td><td>Yes — dead-letter queue for failed messages</td></tr>
+      <tr><td>Setup complexity</td><td>Low — register a URL</td><td>Higher — Azure namespace + queue + SAS key</td></tr>
+      <tr><td>Volume</td><td>Low-moderate</td><td>High (Event Hub: very high)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 id="ch7-dataops">Data Operations at Scale</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Tool</th><th>Direction</th><th>Use Case</th><th>Volume</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Dataflows</strong></td><td>External → Dataverse</td><td>ETL — transform and load from external sources</td><td>Moderate</td></tr>
+      <tr><td><strong>ExecuteMultiple (SDK)</strong></td><td>Code → Dataverse</td><td>Batch creates/updates/deletes from .NET code</td><td>High (1,000/batch)</td></tr>
+      <tr><td><strong>Azure Data Factory</strong></td><td>Any direction</td><td>Enterprise ETL/ELT pipelines with transformations</td><td>Very High</td></tr>
+      <tr><td><strong>Export to Data Lake</strong></td><td>Dataverse → Azure Data Lake Gen2</td><td>Continuous replication for analytics</td><td>Continuous sync</td></tr>
+      <tr><td><strong>Data Import Wizard</strong></td><td>CSV/Excel → Dataverse</td><td>One-time or occasional file-based imports</td><td>Low-moderate</td></tr>
+      <tr><td><strong>Configuration Migration Tool</strong></td><td>Env → Env</td><td>Move reference data (countries, categories) between environments</td><td>Low</td></tr>
+    </tbody>
+  </table></div>
+
+  <span class="code-label">C# — ExecuteMultiple Batch Pattern</span>
+  <pre><code><span class="kw">var</span> requests = <span class="kw">new</span> <span class="ty">OrganizationRequestCollection</span>();
+
+<span class="kw">foreach</span> (<span class="kw">var</span> item <span class="kw">in</span> importItems)
+{
+    <span class="kw">var</span> entity = <span class="kw">new</span> <span class="ty">Entity</span>(<span class="st">"contact"</span>)
+    {
+        [<span class="st">"firstname"</span>] = item.FirstName,
+        [<span class="st">"lastname"</span>] = item.LastName,
+        [<span class="st">"emailaddress1"</span>] = item.Email
+    };
+    requests.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">CreateRequest</span> { Target = entity });
+}
+
+<span class="kw">var</span> response = (<span class="ty">ExecuteMultipleResponse</span>)service.<span class="fn">Execute</span>(<span class="kw">new</span> <span class="ty">ExecuteMultipleRequest</span>
+{
+    Requests = requests,
+    Settings = <span class="kw">new</span> <span class="ty">ExecuteMultipleSettings</span>
+    {
+        ContinueOnError = <span class="kw">true</span>,   <span class="cm">// don't abort entire batch on one failure</span>
+        ReturnResponses = <span class="kw">true</span>   <span class="cm">// get per-item success/failure</span>
+    }
+});
+
+<span class="kw">foreach</span> (<span class="kw">var</span> item <span class="kw">in</span> response.Responses)
+{
+    <span class="kw">if</span> (item.Fault != <span class="kw">null</span>)
+        tracer.<span class="fn">Trace</span>(<span class="st">$"Failed at index {item.RequestIndex}: {item.Fault.Message}"</span>);
+}</code></pre>
+
+  <div class="quiz-block">
+    <h4>🧠 Chapter 7 Quiz</h4>
+    <div class="quiz-q">Q: A scheduled Power Automate flow runs at midnight to retrieve all SharePoint files modified in the last 24 hours across the tenant. No user is logged in when it runs. Which Graph API permission type is required?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Delegated permissions with Authorization Code flow</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Application permissions with Client Credentials flow — admin consent required</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Delegated permissions with Implicit flow</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Delegated permissions with Resource Owner Password Credentials flow</button>
+    <div class="quiz-explain"><strong>Correct: B.</strong> No user is logged in at midnight = no user session = Delegated permissions cannot be used. Application permissions allow the app to authenticate as itself with Client Credentials (client_id + client_secret). Since Application permissions grant access to all tenant data, admin consent is always required. This exact scenario — scheduled, no user — is the canonical Application permissions use case.</div>
+  </div>
+</section>
+
+<!-- CH 8: ALM -->
+<section id="ch8" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 08</div>
+    <div class="chapter-title-block">
+      <h2>ALM &amp; Solutions</h2>
+      <p>Application Lifecycle Management, solution architecture, PAC CLI, and CI/CD pipelines</p>
+    </div>
+  </div>
+  <p>ALM (Application Lifecycle Management) is how professional Power Platform developers move work from development to production reliably, repeatably, and safely. It's 10–15% of the PL-400 exam and is the area most candidates underestimate.</p>
+
+  <h3 id="ch8-solutions">Solution Architecture</h3>
+  <p>A <strong>Solution</strong> is a container that packages Power Platform customizations (tables, forms, plugins, flows, apps, security roles, etc.) for transport between environments. Understanding solution types is foundational.</p>
+
+  <div class="table-wrap"><table>
+    <thead><tr><th>Solution Type</th><th>Description</th><th>Where Used</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Unmanaged</strong></td><td>Source solution — components visible and editable</td><td>Development environment ONLY</td></tr>
+      <tr><td><strong>Managed</strong></td><td>Deployment package — components locked; governed by publisher properties</td><td>Test, UAT, and Production</td></tr>
+      <tr><td><strong>Patch</strong></td><td>Subset of parent solution containing only changes since last version</td><td>Quick hotfixes between major releases</td></tr>
+      <tr><td><strong>Clone</strong></td><td>Full copy of parent managed solution used to start the next major version</td><td>Starting a new major release</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout warn"><strong>⚠️ NEVER Modify Managed Solutions in Non-DEV Environments</strong>
+    Managed solutions in Test/UAT/Production lock their components. Any "customizations" made outside the solution in those environments create untracked technical debt that breaks upgrade paths and creates "solution layering" nightmares. All changes must flow from DEV (unmanaged) → export as managed → import to Test/Prod.</div>
+
+  <h4>The 5-Environment ALM Ring</h4>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Environment</th><th>Solution State</th><th>Purpose</th><th>Who Works Here</th></tr></thead>
+    <tbody>
+      <tr><td><strong>DEV</strong></td><td>Unmanaged</td><td>Developers build and customize</td><td>Developers + makers</td></tr>
+      <tr><td><strong>Build / CI</strong></td><td>Automated export (unmanaged) → unpack</td><td>Source control sync; CI validation</td><td>CI pipeline (automated)</td></tr>
+      <tr><td><strong>Test / QA</strong></td><td>Managed</td><td>QA validates; no editing allowed</td><td>QA testers</td></tr>
+      <tr><td><strong>UAT</strong></td><td>Managed</td><td>Business stakeholders validate</td><td>Business users</td></tr>
+      <tr><td><strong>Production</strong></td><td>Managed</td><td>Live; zero direct customization ever</td><td>End users</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout exam"><strong>🎯 EXAM — The ALM Flow Pattern</strong>
+    1. Developer builds in DEV (unmanaged solution)<br>
+    2. CI pipeline: export unmanaged from DEV → <strong>unpack</strong> to XML files → commit to source control<br>
+    3. CD pipeline: pack XML source → build <strong>managed</strong> solution zip → import managed to Test<br>
+    4. After QA approval → import same managed zip to UAT → Production<br>
+    Know: export is always from DEV (unmanaged). Import to non-DEV is always managed. Unpacking is how you get version-controllable XML from a solution zip.</div>
+
+  <h3 id="ch8-cicd">GitHub Actions CI/CD Pipeline</h3>
+  <span class="code-label">YAML — Power Platform GitHub Actions Pipeline</span>
+  <pre><code>name: Power Platform ALM
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  export-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Export Solution from DEV
+        uses: microsoft/powerplatform-actions/export-solution@v1
+        with:
+          environment-url: ${{ secrets.DEV_URL }}
+          app-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          solution-name: ContosoSolution
+          solution-output-file: ./ContosoSolution_unmanaged.zip
+
+      - name: Unpack to Source Control
+        uses: microsoft/powerplatform-actions/unpack-solution@v1
+        with:
+          solution-file: ./ContosoSolution_unmanaged.zip
+          solution-folder: ./src/ContosoSolution
+          solution-type: Unmanaged
+
+      - name: Commit to Source Control
+        uses: stefanzweifel/git-auto-commit-action@v4
+
+  deploy-to-test:
+    needs: export-and-commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Pack Managed Solution
+        uses: microsoft/powerplatform-actions/pack-solution@v1
+        with:
+          solution-folder: ./src/ContosoSolution
+          solution-file: ./ContosoSolution_managed.zip
+          solution-type: Managed    <span class="cm"># Always Managed for non-DEV environments</span>
+
+      - name: Import to TEST
+        uses: microsoft/powerplatform-actions/import-solution@v1
+        with:
+          environment-url: ${{ secrets.TEST_URL }}
+          app-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          solution-file: ./ContosoSolution_managed.zip</code></pre>
+
+  <h3 id="ch8-pac">PAC CLI — Complete Command Reference</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Command</th><th>What It Does</th></tr></thead>
+    <tbody>
+      <tr><td><code>pac auth create --url https://org.crm.dynamics.com</code></td><td>Authenticate to an environment (stores token locally)</td></tr>
+      <tr><td><code>pac auth list</code></td><td>Show all saved authentication profiles</td></tr>
+      <tr><td><code>pac env list</code></td><td>List all available Power Platform environments</td></tr>
+      <tr><td><code>pac env select --environment my-env</code></td><td>Switch active environment</td></tr>
+      <tr><td><code>pac solution export --name MySolution --path ./output</code></td><td>Export solution as zip to local path</td></tr>
+      <tr><td><code>pac solution unpack --zipfile MySolution.zip --folder ./src</code></td><td>Unpack solution zip to version-controllable XML files</td></tr>
+      <tr><td><code>pac solution pack --zipfile Out.zip --folder ./src --packagetype Managed</code></td><td>Pack XML source into managed solution zip</td></tr>
+      <tr><td><code>pac solution import --path MySolution_managed.zip</code></td><td>Import solution zip to current environment</td></tr>
+      <tr><td><code>pac pcf init --namespace NS --name Control --template field</code></td><td>Initialize a new PCF project</td></tr>
+      <tr><td><code>pac pcf push --publisher-prefix con</code></td><td>Build and push PCF control to environment (for local testing)</td></tr>
+      <tr><td><code>pac plugin init</code></td><td>Scaffold a new plugin project with correct structure</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="quiz-block">
+    <h4>🧠 Chapter 8 Quiz</h4>
+    <div class="quiz-q">Q: A fix is deployed to the Test environment using a managed solution. Testers find a bug. The developer fixes it in DEV. What is the correct sequence to update the Test environment?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Edit the managed solution directly in Test to apply the fix</button>
+    <button class="quiz-opt" onclick="answer(this,false)">B) Delete the managed solution from Test, fix in DEV, then re-import</button>
+    <button class="quiz-opt" onclick="answer(this,true)">C) Fix in DEV (unmanaged). Export as managed with the same or incremented version number. Import the managed solution to Test — it will overlay and update the existing managed solution in-place.</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Use the Configuration Migration Tool to push the fix from DEV to Test</button>
+    <div class="quiz-explain"><strong>Correct: C.</strong> The correct ALM pattern: always change in DEV (unmanaged), export as managed, import to Test. Importing a managed solution over an existing managed solution of the same publisher/name performs an in-place upgrade. You do not need to delete first. Never edit managed solutions in non-DEV environments — this breaks the ALM chain and creates unsupported "active" customization layers.</div>
+  </div>
+</section>
+
+<!-- CHEAT SHEET -->
+<section id="cheatsheet" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-num">Reference</div>
+    <div class="chapter-title-block">
+      <h2>Master Cheat Sheet</h2>
+      <p>Every exam-critical fact on one page — review the night before</p>
+    </div>
+  </div>
+
+  <h3>Plugin Pipeline Quick Reference</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Stage</th><th>#</th><th>In DB Transaction?</th><th>Async Available?</th><th>Cancel Operation?</th><th>Pre-Image Available?</th><th>Post-Image Available?</th></tr></thead>
+    <tbody>
+      <tr><td>Pre-Validation</td><td>10</td><td>❌ No</td><td>❌ No</td><td>✅ Yes</td><td>❌ No</td><td>❌ No</td></tr>
+      <tr><td>Pre-Operation</td><td>20</td><td>✅ Yes</td><td>❌ No</td><td>✅ Yes</td><td>✅ Yes (Update/Delete)</td><td>❌ No</td></tr>
+      <tr><td>Post-Operation</td><td>40</td><td>✅ (sync) / ❌ (async)</td><td>✅ Yes</td><td>✅ (sync only)</td><td>✅ Yes (Update/Delete)</td><td>✅ Yes (Create/Update)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>The "Never Do This" List — 10 Rules</h3>
+  <div class="callout warn"><strong>⚠️ Violating Any of These Will Cost You Points</strong>
+    1. Never use <code>Xrm.Page</code> — use <code>executionContext.getFormContext()</code><br>
+    2. Never leave Filtering Attributes blank if only specific field changes matter<br>
+    3. Never use Async execution mode on Stage 10 or Stage 20<br>
+    4. Never store secrets in Unsecure Config — use Secure Config<br>
+    5. Never deploy unmanaged solutions to Test/UAT/Production environments<br>
+    6. Never use <code>EndsWith()</code> in Canvas App — it's not delegable on any data source<br>
+    7. Never register a Pre-Image on a Create event — there's no pre-creation state<br>
+    8. Never use Delegated Graph permissions in scheduled flows with no user context<br>
+    9. Never use <code>IsEmpty()</code> to check if a text string is empty — use <code>IsBlank()</code><br>
+    10. Never use Virtual Tables for data that needs FK relationships to standard tables
+  </div>
+
+  <h3>Security Flow in Plain English</h3>
+  <p>User Request → <strong>Azure AD authenticates the user</strong> (right tenant, licensed?) → <strong>Security Role check</strong> (does this role have the required privilege on this table?) → <strong>Business Unit depth check</strong> (does the user's depth allow accessing this specific record's owner?) → <strong>Field Security Profile</strong> (are any columns on this record restricted for this user?) → Data returned.</p>
+
+  <h3>PCF Lifecycle Order</h3>
+  <p><code>init()</code> (once, on control load) → <code>updateView()</code> (on every context or data change) → <code>getOutputs()</code> (called by platform after <code>notifyOutputChanged()</code>) → <code>destroy()</code> (on control unload). Never call <code>notifyOutputChanged()</code> from inside <code>updateView()</code> — infinite loop.</p>
+
+  <h3>Custom Connector Auth Decision Tree</h3>
+  <p>Modern API with user login? → <strong>OAuth 2.0</strong> | Simple key in header or query string? → <strong>API Key</strong> | No credentials needed? → <strong>No Authentication</strong> | On-premises legacy system? → <strong>Windows Authentication + On-premises Data Gateway</strong></p>
+
+  <h3>ALM: Managed vs Unmanaged by Environment</h3>
+  <p>DEV = <strong>Unmanaged</strong> | Test = <strong>Managed</strong> | UAT = <strong>Managed</strong> | Production = <strong>Managed</strong>. Export from DEV as unmanaged, unpack to XML, commit. Pack to managed, import to non-DEV. Simple rule: <em>if it's not DEV, it gets managed.</em></p>
+
+  <h3>IsBlank vs IsEmpty</h3>
+  <p><code>IsBlank(text)</code> → TRUE if the value is null or empty string. Use for: checking if a field has no value.<br>
+  <code>IsEmpty(table)</code> → TRUE if the table/collection has zero records. Use for: checking if a query returned nothing. Never use IsEmpty on a text value — it returns FALSE for "".</p>
+</section>
+
+<!-- PRACTICE EXAM -->
+<section id="practice" class="chapter">
+  <div class="chapter-header">
+    <div class="chapter-num">Practice Exam</div>
+    <div class="chapter-title-block">
+      <h2>30 Practice Questions</h2>
+      <p>Exam-style difficulty. No looking at chapters. Suggested time: 75 minutes.</p>
+    </div>
+  </div>
+
+  <div class="quiz-block">
+    <h4>Section 1 — Architecture &amp; Dataverse (Q1–Q10)</h4>
+
+    <div class="quiz-q">P1: A company needs an app for field technicians to complete inspection checklists on mobile devices while offline in areas with no connectivity, syncing when connectivity returns. Data requires role-based access. Best approach?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Canvas App connected to SharePoint</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Model-Driven App with Dataverse and an offline profile</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Canvas App using local storage and manual sync Power Automate flow</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Power Pages portal with offline support</button>
+    <div class="quiz-explain"><strong>B.</strong> Model-driven apps natively support offline profiles with Dataverse. Canvas apps have no native offline sync. Power Pages is for external web portals, not mobile offline scenarios.</div>
+
+    <br><div class="quiz-q">P2: An Account table needs a column showing total revenue from all related active Opportunities, updating automatically. Which column type is correct?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Formula column using a Sum expression</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Rollup column — Sum of Revenue on related Opportunities where Status = Active</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Calculated column using a lookup expression</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) JavaScript OnLoad handler that runs a WebApi query</button>
+    <div class="quiz-explain"><strong>B.</strong> Rollup columns aggregate across related records. Formula columns compute from the same record's columns only. JavaScript is client-side and doesn't persist the value. Calculated columns don't span tables.</div>
+
+    <br><div class="quiz-q">P3: Projects and Employees have a many-to-many relationship. Each assignment needs to store Role (PM, Dev, Tester) and Start Date. How to model this?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Native N:N relationship between Project and Employee</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Manual junction table "ProjectAssignment" with two Lookup columns (Project + Employee) plus Role and StartDate columns</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Add Role and StartDate columns directly to the Employee table</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Two 1:N relationships from Project and Employee to a shared Activity table</button>
+    <div class="quiz-explain"><strong>B.</strong> Native N:N creates a system-managed intersect table with no custom columns. To store attributes ON the relationship itself, you need a manual junction table with two lookup columns plus your additional columns.</div>
+
+    <br><div class="quiz-q">P4: A plugin on Account Create at Stage 20 (Synchronous) throws an unhandled NullReferenceException. What does the user experience?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Account is created; exception is logged silently</button>
+    <button class="quiz-opt" onclick="answer(this,false)">B) Plugin is skipped and account is created normally</button>
+    <button class="quiz-opt" onclick="answer(this,true)">C) Account creation fails entirely; user sees error; database transaction is rolled back</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Plugin retries automatically 3 times then fails</button>
+    <div class="quiz-explain"><strong>C.</strong> Stage 20 runs within the DB transaction. Any unhandled exception rolls back the entire operation. The user sees the error message. Plugins do not auto-retry — that is a feature of async flows, not sync plugins.</div>
+
+    <br><div class="quiz-q">P5: A plugin on Account Update reads a field via Target.Contains("industrycode") and it randomly returns false even though the field has a value. Root cause?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Plugin is in the wrong stage — use Stage 40 to see all fields</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Target on Update only contains fields included in this update payload. If industrycode wasn't updated, it's not in Target. Register a Pre-Image to read current field values.</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Field Security Profile is masking the value</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Use GetAttributeValue instead of Contains to read the field</button>
+    <div class="quiz-explain"><strong>B.</strong> On Update, Target is not the full record — it's only the fields being changed in this specific update operation. Register a Pre-Image in PRT to get the full record state before the update.</div>
+
+    <br><div class="quiz-q">P6: Which statement correctly describes Field Security Profiles?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) They restrict which tables a user can access</button>
+    <button class="quiz-opt" onclick="answer(this,false)">B) They control which records a user sees based on Business Unit</button>
+    <button class="quiz-opt" onclick="answer(this,true)">C) They restrict Read/Create/Update access to specific columns; columns must first be Field Security Enabled; System Admins bypass them</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) They automatically apply to all columns when created on a table</button>
+    <div class="quiz-explain"><strong>C.</strong> Field Security Profiles operate at the column level. The column must first be set to "Field Security Enabled." Then a profile grants column-level permissions to assigned users/teams. System Administrators bypass FSPs — this is a common exam detail.</div>
+
+    <br><div class="quiz-q">P7: A plugin fires on every Account update but only needs to fire when "Revenue" or "Industry" changes. Most efficient fix?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Add early-return logic inside Execute() checking if those fields are in Target</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Set Filtering Attributes to "revenue,industrycode" in the Plugin Registration Tool on the Update step</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Switch to asynchronous mode</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Register separate plugin steps for each field</button>
+    <div class="quiz-explain"><strong>B.</strong> Filtering Attributes prevents the platform from invoking the plugin at all unless those specific fields are in the update. Option A reduces work inside the plugin but still invokes it on every update — less efficient.</div>
+
+    <br><div class="quiz-q">P8: A Virtual Table shows data from an external REST API. Can you create a 1:N relationship from this Virtual Table to a standard Dataverse table using a Lookup column?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Yes — relationships work identically to standard tables</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) No — Virtual Tables do not store physical rows in Dataverse, so foreign key enforcement and Lookup relationships with standard tables are not supported</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Yes — but the relationship is read-only</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Yes — but requires a custom data provider plugin</button>
+    <div class="quiz-explain"><strong>B.</strong> Virtual Tables represent external data without storing rows in Dataverse. Since there are no physical rows in Dataverse, traditional FK relationships with referential integrity cannot be enforced. This is a fundamental limitation of Virtual Tables.</div>
+
+    <br><div class="quiz-q">P9: A Business Rule on the Opportunity table is scoped to "Entity." It sets Probability = 80 when SalesStage = "Proposal." A developer imports 500 Opportunities via the Web API with SalesStage="Proposal" and Probability=50. What happens?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Import fails — Business Rule validation rejects the records</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Records are created with Probability = 80 — Entity-scoped Business Rules enforce on server, including API writes</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Records are created with Probability = 50 — Business Rules only run in the browser</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Records are created with Probability = 50 with a warning logged</button>
+    <div class="quiz-explain"><strong>B.</strong> Entity-scoped Business Rules run as a synchronous workflow on the Dataverse server and enforce on ALL writes — API, import, plugin, and form saves. Form-scoped rules only run in the browser. This is a key PL-400 differentiator.</div>
+
+    <br><div class="quiz-q">P10: How do you cancel a form save from a JavaScript OnSave handler?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Return false from the function</button>
+    <button class="quiz-opt" onclick="answer(this,false)">B) Throw a JavaScript exception</button>
+    <button class="quiz-opt" onclick="answer(this,true)">C) Call <code>executionContext.getEventArgs().preventDefault()</code></button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Set formContext.ui.setFormNotification() with ERROR level</button>
+    <div class="quiz-explain"><strong>C.</strong> preventDefault() on the event args is the only supported way to cancel a save. Returning false does nothing. Throwing an exception shows an unhelpful technical error. setFormNotification shows a banner but does not stop the save.</div>
+  </div>
+
+  <div class="quiz-block">
+    <h4>Section 2 — Power Apps &amp; Automate (Q11–Q20)</h4>
+
+    <div class="quiz-q">P11: A canvas app gallery connected to Dataverse shows 500 records instead of the 8,000 active accounts matching the filter. Cause?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Dataverse limits gallery results to 500</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) The delegation limit is set to 500 in App Settings. If the Filter isn't fully delegated, only the first 500 records are retrieved and filtered locally.</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Row-level security is restricting access to 500 records</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Canvas apps inherently cannot show more than 500 records</button>
+    <div class="quiz-explain"><strong>B.</strong> The delegation limit defaults to 500 (max 2,000). If any part of the filter isn't delegable, Power Apps downloads only 500 records and filters them locally — returning incomplete results. Delegation warnings in Power Apps Studio flag this risk.</div>
+
+    <br><div class="quiz-q">P12: In Power Automate, which expression correctly checks if an array variable "Emails" contains "admin@contoso.com"?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) <code>equals(variables('Emails'), 'admin@contoso.com')</code></button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) <code>contains(variables('Emails'), 'admin@contoso.com')</code></button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) <code>indexOf(variables('Emails'), 'admin@contoso.com')</code></button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) <code>includes(variables('Emails'), 'admin@contoso.com')</code></button>
+    <div class="quiz-explain"><strong>B.</strong> contains() works for both arrays (checks membership) and strings (checks substring). equals() compares the entire array to a string — wrong. indexOf() returns position, not boolean. includes() is JavaScript syntax, not a Power Automate expression function.</div>
+
+    <br><div class="quiz-q">P13: After a PCF control calls notifyOutputChanged(), when does the platform call getOutputs()?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Immediately and synchronously during the notifyOutputChanged() call</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Asynchronously, at a platform-determined time after notifyOutputChanged() — but before the form saves</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Only when the user explicitly saves the form</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) getOutputs() is only used in dataset controls, not field controls</button>
+    <div class="quiz-explain"><strong>B.</strong> notifyOutputChanged() signals to the platform that new values are ready. The platform then calls getOutputs() at its own time to retrieve them. This is asynchronous. Never modify the value between notifyOutputChanged() and getOutputs().</div>
+
+    <br><div class="quiz-q">P14: A Power Automate "Apply to each" loop processing 500 items is very slow. Which single change most directly reduces execution time?</div>
+    <button class="quiz-opt" onclick="answer(this,true)">A) Enable concurrency on the Apply to each loop (set degree of parallelism to 10+)</button>
+    <button class="quiz-opt" onclick="answer(this,false)">B) Switch from cloud flow to desktop flow</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Use Select action to pre-filter the array before the loop</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Add a Delay of 1 second between iterations</button>
+    <div class="quiz-explain"><strong>A.</strong> By default, Apply to each runs serially — one item at a time. Enabling concurrency (Settings → Concurrency Control) runs multiple iterations in parallel, dramatically reducing total time for independent operations. Max concurrency is 50.</div>
+
+    <br><div class="quiz-q">P15: Which Power Fx expression updates multiple existing records in a Dataverse table from a canvas app?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) UpdateIf(Accounts, Status = "Draft", {Status: "Active"})</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) ForAll(colSelectedAccounts, Patch(Accounts, LookUp(Accounts, ID = ThisRecord.ID), {Status: "Active"}))</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Collect(Accounts, {Status: "Active"})</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) PatchAll(Accounts, colSelectedAccounts, {Status: "Active"})</button>
+    <div class="quiz-explain"><strong>B.</strong> Dataverse doesn't support UpdateIf (that's for local collections). PatchAll doesn't exist. For bulk Dataverse updates from canvas apps, use ForAll with Patch for each record. Collect adds new records — doesn't update.</div>
+
+    <br><div class="quiz-q">P16: A model-driven app tab should be hidden until Account Category = "Premium." Recommended no-code approach?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) JavaScript OnChange on Account Category that sets tab visibility</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Business Rule that shows/hides the tab when Account Category equals Premium</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Power Automate flow triggered on record update</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Plugin at Stage 20 that modifies UI state</button>
+    <div class="quiz-explain"><strong>B.</strong> Business Rules support showing/hiding tabs, sections, and fields — no code required. For this simple conditional visibility based on a field value, a Business Rule is the recommended, maintainable, no-code solution. JavaScript would also work but adds complexity.</div>
+
+    <br><div class="quiz-q">P17: Format a UTC date as "dd/MM/yyyy" in India Standard Time in Power Automate. Which expression is correct?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) <code>formatDateTime(triggerBody()?['createdon'], 'DD/MM/YYYY')</code></button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) <code>formatDateTime(convertFromUtc(triggerBody()?['createdon'], 'India Standard Time'), 'dd/MM/yyyy')</code></button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) <code>convertTimeZone(triggerBody()?['createdon'], 'UTC', 'IST', 'DD/MM/YYYY')</code></button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) <code>addHours(formatDateTime(triggerBody()?['createdon'], 'dd/MM/yyyy'), 5.5)</code></button>
+    <div class="quiz-explain"><strong>B.</strong> convertFromUtc() converts the timezone, then formatDateTime() formats it. Format string: dd=day digits, MM=month (capital M! mm=minutes), yyyy=4-digit year. Option A uses invalid uppercase tokens. Option C uses a non-existent function. convertTimeZone() is an Azure Logic Apps function, not Power Automate.</div>
+
+    <br><div class="quiz-q">P18: A canvas app user reports IsEmpty(TextInput1.Text) returns false even when the text box is empty. Why?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) The text box is not connected to a data source, so IsEmpty returns false</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) IsEmpty() only tests tables and collections for zero records — it returns false for an empty string. Use IsBlank() to test for empty or null text values.</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) IsEmpty() requires the text input to be in a gallery</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) IsEmpty("") returns true only when the Default property is also blank</button>
+    <div class="quiz-explain"><strong>B.</strong> IsEmpty() is for tables/collections — it checks if a table has zero rows. It returns false for an empty string "". To check if a text value is null or empty, use IsBlank().</div>
+
+    <br><div class="quiz-q">P19: Power Automate custom connector uses OAuth 2.0. Users are repeatedly prompted to log in even after previously authorizing. Most likely cause?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) OAuth 2.0 doesn't support token caching in custom connectors</button>
+    <button class="quiz-opt" onclick="answer(this,false)">B) The connector must use API Key authentication instead</button>
+    <button class="quiz-opt" onclick="answer(this,true)">C) The OAuth refresh token configuration is incorrect — the offline_access scope may be missing, or the token lifetime is too short, causing repeated re-authentication prompts</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Each user must create a new connection each time they run a flow</button>
+    <div class="quiz-explain"><strong>C.</strong> Power Platform caches OAuth connections. Repeated login prompts indicate refresh token failure — either the offline_access scope is missing from the OAuth configuration, or the refresh token is expiring. Check the OAuth app registration for proper token lifetime and scope settings.</div>
+
+    <br><div class="quiz-q">P20: A plugin needs to make an HTTP call to an external API to validate data synchronously before allowing a record to be created. The API takes up to 8 seconds. What is the correct plugin registration?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Stage 40, Asynchronous — avoids the time limit</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Stage 20, Synchronous — validation that must block a save requires Pre-Operation sync. Be aware of user experience impact and keep calls efficient.</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Stage 10, Synchronous — runs outside transaction for better performance</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Use Power Automate flow instead — plugins can't make HTTP calls</button>
+    <div class="quiz-explain"><strong>B.</strong> To cancel (prevent) a record creation based on validation logic, the plugin MUST run synchronously and before the DB write — Stage 20 (Pre-Operation). Stage 40 Async runs after the record is created, so cannot cancel it. Plugins can absolutely make HTTP calls (outbound HTTP is allowed in non-isolated plugins).</div>
+  </div>
+
+  <div class="quiz-block">
+    <h4>Section 3 — Integration, ALM &amp; Advanced (Q21–Q30)</h4>
+
+    <div class="quiz-q">P21: A Webhook is registered to call an Azure Function when a new Account is created. The Azure Function is down for 2 hours. What happens to events during this time?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Events are queued in Dataverse and replayed automatically when the function recovers</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Dataverse retries the webhook a few times and then gives up — events are lost. Webhooks do not guarantee delivery.</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Account creation is blocked until the Function responds</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Events go to a dead-letter queue in Dataverse for manual retry</button>
+    <div class="quiz-explain"><strong>B.</strong> Webhooks are fire-and-forget HTTP POSTs with limited retries. No persistent queue. If the endpoint is unavailable beyond the retry window, the messages are lost. For guaranteed delivery, use Azure Service Bus (Service Endpoint in PRT).</div>
+
+    <br><div class="quiz-q">P22: How do you set a lookup column (parentcustomerid) on a Contact to point to a specific Account using the Dataverse Web API?</div>
+    <button class="quiz-opt" onclick="answer(this,true)">A) PATCH /api/data/v9.2/contacts(contact-guid) with body: {"parentcustomerid_account@odata.bind": "/accounts(account-guid)"}</button>
+    <button class="quiz-opt" onclick="answer(this,false)">B) POST /api/data/v9.2/contacts(contact-guid)/parentcustomerid/$ref with body: {"@odata.id": "/accounts(account-guid)"}</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) PUT /api/data/v9.2/contacts(contact-guid) with full contact JSON</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) POST /api/data/v9.2/accounts(account-guid)/contact_customer_accounts with contact body</button>
+    <div class="quiz-explain"><strong>A.</strong> To set a lookup (N:1) column via Web API, PATCH the entity with the @odata.bind annotation on the navigation property. The $ref approach (option B) is for N:N relationships. PUT replaces the entire entity record — dangerous and not recommended.</div>
+
+    <br><div class="quiz-q">P23: CI/CD for Power Platform. Developers commit solution XML to GitHub (from unpacked solution). When code merges to main, it should automatically deploy to Test. Correct GitHub Actions approach?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Export unmanaged solution → import unmanaged to Test</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Pack XML source into managed solution → import managed to Test</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Import the unmanaged solution to Test, then promote it to managed using pac solution convert</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Use Configuration Migration Tool to push changes from DEV to Test</button>
+    <div class="quiz-explain"><strong>B.</strong> The CD pipeline packs the XML source into a managed solution zip and imports it to Test. Non-DEV environments always receive managed solutions. The Configuration Migration Tool is for reference data, not customizations.</div>
+
+    <br><div class="quiz-q">P24: A scheduled flow running nightly (no user logged in) needs to call Microsoft Graph to read emails across all mailboxes in the organization. Which permission type?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Delegated permissions — Mail.Read</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Application permissions — Mail.Read (application scope) with admin consent and Client Credentials OAuth flow</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Delegated permissions with a service account username and password</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) No special permission needed if the flow owner has admin access</button>
+    <div class="quiz-explain"><strong>B.</strong> Scheduled flows run without a user session. Delegated permissions require an interactive user. Application permissions with Client Credentials (client_id + client_secret or certificate) allow the app to authenticate as itself and access all mailboxes. Admin consent is always mandatory for application permissions.</div>
+
+    <br><div class="quiz-q">P25: Canvas app updates a Dataverse Account. Error: "You do not have permission to perform this action." The user's security role has User-level Write on Account. The account being updated is owned by another user. Cause?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Canvas apps cannot update Dataverse records — use model-driven apps</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) User-level Write allows updating only records the user owns. The account is owned by another user. The security role needs Business Unit depth (or higher) Write to update records owned by others.</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) The user needs Organization-level Read in addition to Write</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Canvas apps require a separate Dataverse access license</button>
+    <div class="quiz-explain"><strong>B.</strong> Security role depth applies to BOTH read and write. User-level Write = can only update records you own. Business Unit Write = can update records owned by anyone in your BU. Organization Write = can update any record. This is the depth concept applied to update scenarios.</div>
+
+    <br><div class="quiz-q">P26: A plugin references the Newtonsoft.Json NuGet package. When imported to Test environment, plugin fails with "Could not load file or assembly." Fix?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Install Newtonsoft.Json on the Dataverse servers</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Use ILMerge/ILRepack to merge Newtonsoft.Json into the plugin DLL as a single self-contained assembly, then re-register</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Register Newtonsoft.Json as a separate plugin assembly in PRT</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Include the DLL in the solution package root folder</button>
+    <div class="quiz-explain"><strong>B.</strong> Dataverse plugins run in a sandbox — you cannot install software on the server. All dependencies must be merged into a single DLL using ILMerge or ILRepack before registration. Newer SDK versions also support registering dependent assemblies separately in PRT, but ILMerge is the classic exam answer.</div>
+
+    <br><div class="quiz-q">P27: You need to send a Teams channel message every time a High Priority Case is created in Dataverse. Most maintainable Power Platform solution?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Plugin making an HTTP call to Teams API at Stage 40 Post-Operation</button>
+    <button class="quiz-opt" onclick="answer(this,false)">B) JavaScript OnLoad handler that posts to Teams when a Case form opens</button>
+    <button class="quiz-opt" onclick="answer(this,true)">C) Automated Power Automate cloud flow triggered by Dataverse "When a row is added" with filter for Priority = High, using Microsoft Teams connector to post the message</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Power Pages workflow with a Teams step</button>
+    <div class="quiz-explain"><strong>C.</strong> Power Automate with Dataverse trigger + Teams connector is the right tool — no code, maintainable, version-controllable in a solution. JavaScript fires on form open, not on record creation. Plugins can call external APIs but are more complex. This is the "right tool for the job" scenario.</div>
+
+    <br><div class="quiz-q">P28: Which PAC CLI command packs a solution from source XML files as a managed solution for deployment to Test?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) pac solution export --path ./src --managed true</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) pac solution pack --zipfile ./MySolution_managed.zip --folder ./src --packagetype Managed</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) pac solution pack --zipfile ./MySolution.zip --folder ./src</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) pac solution build --source ./src --type Managed --output ./MySolution.zip</button>
+    <div class="quiz-explain"><strong>B.</strong> pac solution pack with --packagetype Managed produces a managed solution zip. Without --packagetype, it defaults to Unmanaged. Always specify Managed for non-DEV deployment. pac solution build is not a valid PAC CLI command.</div>
+
+    <br><div class="quiz-q">P29: A custom connector POST action returns a JSON response with a nested array. In the flow, dynamic content from this action isn't available. Best fix?</div>
+    <button class="quiz-opt" onclick="answer(this,true)">A) Define the full response schema including the nested array (with "items" schema) in the custom connector's Response section</button>
+    <button class="quiz-opt" onclick="answer(this,false)">B) Add a "Parse JSON" action after the connector action in Power Automate</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Convert the response to a string and use substring expressions</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) Redesign the API to return a flat object instead of nested arrays</button>
+    <div class="quiz-explain"><strong>A.</strong> Define the response schema with nested array details directly in the custom connector. This makes the connector self-documenting and enables Power Automate to generate dynamic content automatically. Option B (Parse JSON) is a workaround that works but requires schema definition anyway — the proper fix is in the connector definition itself.</div>
+
+    <br><div class="quiz-q">P30: A developer is fixing a bug found in the Test environment. The bug is in a plugin step registered in a managed solution. The developer directly edits the plugin step in the Test environment. What is the problem with this approach?</div>
+    <button class="quiz-opt" onclick="answer(this,false)">A) Managed solutions can be edited in any environment with admin access</button>
+    <button class="quiz-opt" onclick="answer(this,true)">B) Editing managed components in a non-DEV environment creates an "active" customization layer that will be overwritten on the next managed solution import, and breaks the ALM chain — losing the fix</button>
+    <button class="quiz-opt" onclick="answer(this,false)">C) Plugin steps cannot be edited — they must be deleted and re-registered</button>
+    <button class="quiz-opt" onclick="answer(this,false)">D) This is correct ALM practice — fix where the problem is found</button>
+    <div class="quiz-explain"><strong>B.</strong> Changes made directly in Test to managed components exist as an "active layer" that is overwritten the next time the managed solution is imported. The correct approach: fix in DEV (unmanaged), export managed, import to Test. Direct edits to managed solutions in non-DEV environments are technical debt that breaks ALM.</div>
+  </div>
+
+  <div style="text-align:center;padding:48px 0 32px">
+    <p style="font-size:22px;color:var(--gold);margin-bottom:12px">🎓 You've finished the book.</p>
+    <p style="color:var(--muted);line-height:1.7;max-width:500px;margin:0 auto 16px">Review every question you got wrong. Build the real thing in your developer environment. Read the weak chapters again. Come back 48 hours before the exam for a final speed run of the Cheat Sheet.</p>
+    <p style="color:var(--accent);font-style:italic;font-size:14px">"The exam doesn't test if you memorized facts. It tests if you understand Power Platform well enough to make good decisions. That's what this book was for."</p>
+  </div>
+</section>
+
+<script>
+window.addEventListener('scroll',function(){
+  var doc=document.documentElement;
+  var scrollTop=doc.scrollTop||document.body.scrollTop;
+  var scrollH=doc.scrollHeight-doc.clientHeight;
+  document.getElementById('progress-fill').style.width=(scrollTop/scrollH*100)+'%';
+  var links=document.querySelectorAll('.toc-link');
+  var sections=document.querySelectorAll('[id]');
+  var current='';
+  sections.forEach(function(s){if(s.offsetTop<=scrollTop+120)current=s.id;});
+  links.forEach(function(l){
+    l.classList.remove('active');
+    if(l.getAttribute('href')==='#'+current)l.classList.add('active');
+  });
+});
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');}
+document.querySelectorAll('.toc-link').forEach(function(l){
+  l.addEventListener('click',function(){
+    if(window.innerWidth<=768)document.getElementById('sidebar').classList.remove('open');
+  });
+});
+function answer(btn,isCorrect){
+  var block=btn.closest('.quiz-block');
+  var btns=block.querySelectorAll('.quiz-opt:not([disabled])');
+  btns.forEach(function(b){b.disabled=true;});
+  btn.classList.add(isCorrect?'correct':'wrong');
+  var explain=btn.nextElementSibling;
+  while(explain&&!explain.classList.contains('quiz-explain')){explain=explain.nextElementSibling;}
+  if(explain)explain.classList.add('show');
+}
+</script>
+</main>
+</body>
+</html>
